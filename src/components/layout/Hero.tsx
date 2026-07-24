@@ -26,20 +26,20 @@ export default function Hero() {
   });
 
   return (
-    <section id="anasayfa" ref={sectionRef} className="relative h-[70vh] lg:h-[100dvh] w-full overflow-clip bg-center bg-cover bg-no-repeat bg-slate-50 dark:bg-slate-950 transition-colors"
+    <section id="anasayfa" ref={sectionRef} className="relative h-[70vh] lg:h-[130vh] w-full overflow-clip bg-center bg-cover bg-no-repeat bg-slate-50 dark:bg-slate-950 transition-colors"
       style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1920&q=80')`,
+        backgroundImage: `linear-gradient(to bottom, rgba(248,250,252,0.65), rgba(248,250,252,0.95)), url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1920&q=80')`,
         backgroundAttachment: 'fixed',
       }}
     >
       <div className="sticky top-16 h-[calc(100dvh-64px)] flex items-center justify-center overflow-hidden px-4 sm:px-9 pb-20 sm:pb-0">
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-white/70 to-white dark:via-slate-950/70 dark:to-slate-950" />
+        <div className="absolute inset-0 z-[1] dark:bg-[radial-gradient(circle_at_center,transparent_0%,rgba(7,17,31,0.5)_100%),linear-gradient(180deg,rgba(7,17,31,0.3)_0%,rgba(7,17,31,0.85)_100%)] bg-[radial-gradient(circle_at_center,transparent_0%,rgba(241,245,249,0.8)_100%),linear-gradient(180deg,rgba(248,250,252,0.3)_0%,rgba(248,250,252,0.95)_100%)]" />
 
         {/* Bottom fade to blend into next section */}
-        <div className="absolute bottom-0 inset-x-0 h-32 lg:h-64 z-[3] pointer-events-none bg-gradient-to-t from-white dark:from-slate-950 to-transparent" />
+        <div className="absolute bottom-0 inset-x-0 h-32 z-[3] pointer-events-none bg-gradient-to-t from-white dark:from-slate-950 to-transparent" />
 
         <motion.div
-          className="relative z-[2] text-center w-full sm:max-w-[820px] px-4 sm:px-8 md:px-10 py-6 sm:py-9 md:py-11 rounded-[32px] border shadow-2xl bg-white/88 dark:bg-slate-900/65 border-slate-300/90 dark:border-white/18 shadow-slate-950/12 dark:shadow-black/60 backdrop-blur-[20px] saturate-[180%] transform-gpu"
+          className="relative z-[2] text-center w-full sm:max-w-[820px] px-4 sm:px-9 py-5 sm:py-11 rounded-[32px] border shadow-2xl bg-white/88 dark:bg-slate-900/65 border-slate-300/90 dark:border-white/18 shadow-slate-950/12 dark:shadow-black/60 backdrop-blur-[20px] saturate-[180%] transform-gpu"
           style={{ opacity: contentOpacity, y: contentY, scale: contentScale, filter: contentFilter }}
         >
           <motion.span
@@ -56,7 +56,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-tight font-extrabold mb-3 sm:mb-[18px] tracking-tight bg-gradient-to-b text-transparent bg-clip-text from-slate-900 to-slate-700 dark:from-white dark:to-slate-300"
+            className="text-[clamp(1.35rem,4.2vw,3.5rem)] leading-[1.15] font-extrabold mb-3 sm:mb-[18px] tracking-tight bg-gradient-to-b text-transparent bg-clip-text from-slate-900 to-slate-700 dark:from-white dark:to-slate-300"
           >
             Fatsa Nakliyat ve Ordu Evden Eve Taşımacılık
           </motion.h1>
