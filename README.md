@@ -2,7 +2,7 @@
 
 Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı nakliyat ve şehirlerarası lojistik hizmetleri sunan modern web uygulaması.
 
-**Canlı:** [aganakliyat.com.tr](https://aganakliyat.com.tr)
+**Canlı:** [orduaganakliyat.com.tr](https://www.orduaganakliyat.com.tr/)
 
 ---
 
