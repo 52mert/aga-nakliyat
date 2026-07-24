@@ -105,15 +105,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       });
   }, []);
 
-  const updatePricingConfig = async (config: PricingConfig) => {
+  const updatePricingConfig = async (config: PricingConfig): Promise<boolean> => {
+    const prev = pricingConfig;
     setPricingConfig(config);
-    await supabase.from('pricing_config').update({
+    const { error } = await supabase.from('pricing_config').update({
       base_prices: config.base_prices,
       floor_cost_per_floor: config.floor_cost_per_floor,
       route_costs: config.route_costs,
       elevator_cost: config.elevator_cost,
       markup_percent: config.markup_percent,
     }).eq('id', 1);
+    if (error) {
+      console.error('Pricing update failed:', error.message);
+      setPricingConfig(prev);
+      return false;
+    }
+    return true;
   };
 
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);

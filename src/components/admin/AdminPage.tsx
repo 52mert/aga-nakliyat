@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   X, Lock, ShieldCheck, FileText, MessageSquare, PhoneCall, 
@@ -28,6 +28,11 @@ export default function AdminPage() {
 
   const [pricingForm, setPricingForm] = useState(pricingConfig);
   const [pricingSaved, setPricingSaved] = useState(false);
+  const [pricingError, setPricingError] = useState(false);
+
+  useEffect(() => {
+    setPricingForm(pricingConfig);
+  }, [pricingConfig]);
 
   const [newReview, setNewReview] = useState({
     name: '', location: 'Fatsa, Ordu', rating: 5,
@@ -68,9 +73,15 @@ export default function AdminPage() {
 
   const handleSavePricing = async (e: React.FormEvent) => {
     e.preventDefault();
-    await updatePricingConfig(pricingForm);
-    setPricingSaved(true);
-    setTimeout(() => setPricingSaved(false), 2000);
+    setPricingError(false);
+    const ok = await updatePricingConfig(pricingForm);
+    if (ok) {
+      setPricingSaved(true);
+      setTimeout(() => setPricingSaved(false), 2000);
+    } else {
+      setPricingError(true);
+      setTimeout(() => setPricingError(false), 3000);
+    }
   };
 
   const handleCreateOfficialReview = async (e: React.FormEvent) => {
@@ -328,6 +339,11 @@ export default function AdminPage() {
               {pricingSaved && (
                 <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold bg-emerald-950/40 px-4 py-2 rounded-xl border border-emerald-800/50">
                   <Check className="w-4 h-4" />Fiyatlar kaydedildi!
+                </div>
+              )}
+              {pricingError && (
+                <div className="flex items-center gap-2 text-red-400 text-xs font-bold bg-red-950/40 px-4 py-2 rounded-xl border border-red-800/50">
+                  <X className="w-4 h-4" />Fiyatlar kaydedilemedi!
                 </div>
               )}
 
