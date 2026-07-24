@@ -26,9 +26,12 @@ export default function Hero() {
   });
 
   return (
-    <section id="anasayfa" ref={sectionRef} className="relative h-[70vh] lg:h-[130vh] w-full overflow-clip bg-center bg-cover bg-no-repeat bg-slate-50 dark:bg-slate-950 transition-colors"
+   <section id="anasayfa" ref={sectionRef} className="relative h-[70vh] lg:h-[130vh] w-full overflow-clip bg-center bg-cover bg-no-repeat bg-slate-50 dark:bg-slate-950 transition-colors"
       style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(248,250,252,0.65), rgba(248,250,252,0.95)), url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1920&q=80')`,
+        /* DÜZELTME BURADA: Unsplash linki yerine senin kendi kamyon fotoğrafın eklendi ve merkeze sabitlendi */
+        backgroundImage: `linear-gradient(to bottom, rgba(248,250,252,0.65), rgba(248,250,252,0.95)), url('/images/aganakliyat2.jpeg')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
         backgroundAttachment: 'fixed',
       }}
     >
