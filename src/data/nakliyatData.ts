@@ -64,7 +64,7 @@ export const SERVICES: Service[] = [
     title: 'Parça Eşya Taşımacılığı',
     description: 'Aynı güzergahtaki az sayıdaki eşyalarınız için ekonomik ve hızlı parça taşıma çözümü sunuyoruz.',
     iconName: 'Box',
-    image: '/images/kamyonici.jpeg',
+    image: '/images/paketleme3.jpeg',
     features: ['Bütçe dostu paylaşım opsiyonu', 'Fatsa-Ünye-Ordu arası günlük sefer', 'Küçük hacimli hızlı nakliye', 'Kapıdan kapıya teslimat'],
     popular: false
   }
