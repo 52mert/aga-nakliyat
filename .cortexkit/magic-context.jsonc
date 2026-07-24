@@ -1,0 +1,10 @@
+{
+  "language": "tr",
+  "memory": {
+    "enabled": true,
+    "auto_promote": true
+  },
+  "historian": {
+    "two_pass": false
+  }
+}
