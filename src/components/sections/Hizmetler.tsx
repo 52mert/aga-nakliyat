@@ -117,10 +117,9 @@ export default function Hizmetler() {
         </div>
 
         {/* Service Cards Horizontal Track */}
-        <div ref={scrollContainerRef}
-          className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 scroll-smooth touch-pan-x"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', touchAction: 'pan-x pan-y' }}>
-          {SERVICES.map((service, index) => {
+       <div ref={scrollContainerRef}
+  className="flex gap-4 sm:gap-6 overflow-x-auto overflow-y-hidden scrollbar-none snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 scroll-smooth"
+  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>  {SERVICES.map((service, index) => {
             const IconComponent = iconMap[service.iconName] || Truck;
 
             return (

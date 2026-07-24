@@ -35,9 +35,6 @@ export default function Hero() {
       <div className="sticky top-16 h-[calc(100dvh-64px)] flex items-center justify-center overflow-hidden px-4 sm:px-9 pb-20 sm:pb-0">
         <div className="absolute inset-0 z-[1] dark:bg-[radial-gradient(circle_at_center,transparent_0%,rgba(7,17,31,0.5)_100%),linear-gradient(180deg,rgba(7,17,31,0.3)_0%,rgba(7,17,31,0.85)_100%)] bg-[radial-gradient(circle_at_center,transparent_0%,rgba(241,245,249,0.8)_100%),linear-gradient(180deg,rgba(248,250,252,0.3)_0%,rgba(248,250,252,0.95)_100%)]" />
 
-        {/* Bottom fade to blend into next section */}
-        <div className="absolute bottom-0 inset-x-0 h-32 z-[3] pointer-events-none bg-gradient-to-t from-white dark:from-slate-950 to-transparent" />
-
         <motion.div
           className="relative z-[2] text-center w-full sm:max-w-[820px] px-4 sm:px-9 py-5 sm:py-11 rounded-[32px] border shadow-2xl bg-white/88 dark:bg-slate-900/65 border-slate-300/90 dark:border-white/18 shadow-slate-950/12 dark:shadow-black/60 backdrop-blur-[20px] saturate-[180%] transform-gpu"
           style={{ opacity: contentOpacity, y: contentY, scale: contentScale, filter: contentFilter }}
@@ -100,7 +97,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="flex justify-center items-center gap-3 sm:gap-6 mt-5 sm:mt-8 pt-4 sm:pt-6 border-t border-slate-200/80 dark:border-white/10 flex-wrap"
+            className="flex justify-center items-center gap-3 sm:gap-6 mt-5 sm:mt-8 pt-4 sm:pt-6 flex-wrap"
           >
             <div className="flex items-center gap-2 text-[11px] sm:text-sm text-slate-600 dark:text-slate-400">
               <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500 dark:text-emerald-400" />
@@ -117,6 +114,9 @@ export default function Hero() {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Sadece senin kodundaki div buraya taşındı, z-index'i üstte kalması için 10 yapıldı */}
+      <div className="absolute bottom-0 inset-x-0 h-32 z-[10] pointer-events-none bg-gradient-to-t from-white dark:from-slate-950 to-transparent" />
     </section>
   );
 }
