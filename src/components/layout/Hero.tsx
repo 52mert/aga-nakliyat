@@ -26,13 +26,13 @@ export default function Hero() {
   });
 
   return (
-   <section id="anasayfa" ref={sectionRef} className="relative h-[70vh] lg:h-[130vh] w-full overflow-clip bg-center bg-cover bg-no-repeat bg-slate-50 dark:bg-slate-950 transition-colors"
+   <section id="anasayfa" ref={sectionRef} className="relative h-[70vh] lg:h-[130vh] w-full overflow-clip bg-center bg-no-repeat bg-slate-50 dark:bg-slate-950 transition-colors"
       style={{
-        /* DÜZELTME BURADA: Unsplash linki yerine senin kendi kamyon fotoğrafın eklendi ve merkeze sabitlendi */
         backgroundImage: `linear-gradient(to bottom, rgba(248,250,252,0.65), rgba(248,250,252,0.95)), url('/images/kamyon.jpeg')`,
-        backgroundSize: 'cover',
+        // Resmi biraz küçültmek için cover yerine yüzde oranı veriyoruz
+        backgroundSize: '115% auto',
         backgroundPosition: 'center center',
-        backgroundAttachment: 'fixed',
+        backgroundAttachment: 'scroll',
       }}
     >
       <div className="sticky top-16 h-[calc(100dvh-64px)] flex items-center justify-center overflow-hidden px-4 sm:px-9 pb-20 sm:pb-0">
