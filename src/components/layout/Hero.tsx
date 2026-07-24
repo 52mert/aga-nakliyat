@@ -26,14 +26,14 @@ export default function Hero() {
   });
 
   return (
-    <section id="anasayfa" ref={sectionRef} className="relative h-[70vh] lg:h-[130vh] w-full overflow-clip bg-center bg-cover bg-no-repeat bg-slate-50 dark:bg-slate-950 transition-colors"
+    <section id="anasayfa" ref={sectionRef} className="relative h-[70vh] lg:h-[110vh] w-full overflow-clip bg-center bg-cover bg-no-repeat bg-slate-50 dark:bg-slate-950 transition-colors"
       style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(248,250,252,0.65), rgba(248,250,252,0.95)), url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1920&q=80')`,
+        backgroundImage: `url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1920&q=80')`,
         backgroundAttachment: 'fixed',
       }}
     >
       <div className="sticky top-16 h-[calc(100dvh-64px)] flex items-center justify-center overflow-hidden px-4 sm:px-9 pb-20 sm:pb-0">
-        <div className="absolute inset-0 z-[1] dark:bg-[radial-gradient(circle_at_center,transparent_0%,rgba(7,17,31,0.5)_100%),linear-gradient(180deg,rgba(7,17,31,0.3)_0%,rgba(7,17,31,0.85)_100%)] bg-[radial-gradient(circle_at_center,transparent_0%,rgba(241,245,249,0.8)_100%),linear-gradient(180deg,rgba(248,250,252,0.3)_0%,rgba(248,250,252,0.95)_100%)]" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-white/70 to-white dark:via-slate-950/70 dark:to-slate-950" />
 
         {/* Bottom fade to blend into next section */}
         <div className="absolute bottom-0 inset-x-0 h-32 z-[3] pointer-events-none bg-gradient-to-t from-white dark:from-slate-950 to-transparent" />
