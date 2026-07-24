@@ -137,18 +137,18 @@ export default function Hizmetler() {
                   </div>
                 )}
 
-                {/* Card Image Header */}
-                <div className="relative h-52 overflow-hidden">
+                {/* SADECE BURASI DEĞİŞTİ: Resimlerin kesilmeden küçülüp tam sığması için object-contain ve arkaplan eklendi */}
+                <div className="relative h-52 overflow-hidden bg-slate-200/50 dark:bg-slate-800/50">
                   <img
                     src={service.image}
                     alt={service.title}
                     width={800}
                     height={600}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent pointer-events-none" />
                   
                   <div className="absolute bottom-4 left-6 w-12 h-12 rounded-2xl bg-slate-950/90 border border-slate-700/80 text-red-500 flex items-center justify-center shadow-lg group-hover:bg-red-600 group-hover:text-white transition-colors duration-300">
                     <IconComponent className="w-6 h-6" />
@@ -197,4 +197,3 @@ export default function Hizmetler() {
     </section>
   );
 }
-
