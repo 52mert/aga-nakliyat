@@ -32,11 +32,11 @@ export default function Hero() {
         backgroundAttachment: 'fixed',
       }}
     >
-      <div className="sticky top-16 h-[calc(100dvh-64px)] flex items-center justify-center overflow-hidden px-4 sm:px-9 pb-20 md:pb-12">
+      <div className="sticky top-16 h-[calc(100dvh-64px)] flex items-center justify-center overflow-hidden px-4 sm:px-9 pb-20 md:pb-0">
         <div className="absolute inset-0 z-[1] dark:bg-[radial-gradient(circle_at_center,transparent_0%,rgba(7,17,31,0.5)_100%),linear-gradient(180deg,rgba(7,17,31,0.3)_0%,rgba(7,17,31,0.85)_100%)] bg-[radial-gradient(circle_at_center,transparent_0%,rgba(241,245,249,0.8)_100%),linear-gradient(180deg,rgba(248,250,252,0.3)_0%,rgba(248,250,252,0.95)_100%)]" />
 
         {/* Bottom fade to blend into next section */}
-        <div className="absolute bottom-0 inset-x-0 h-32 z-[3] pointer-events-none bg-gradient-to-t from-white dark:from-slate-950 to-transparent" />
+        <div className="absolute bottom-0 inset-x-0 h-32 lg:h-64 z-[3] pointer-events-none bg-gradient-to-t from-white dark:from-slate-950 to-transparent" />
 
         <motion.div
           className="relative z-[2] text-center w-full sm:max-w-[820px] px-4 sm:px-8 md:px-10 py-6 sm:py-9 md:py-11 rounded-[32px] border shadow-2xl bg-white/88 dark:bg-slate-900/65 border-slate-300/90 dark:border-white/18 shadow-slate-950/12 dark:shadow-black/60 backdrop-blur-[20px] saturate-[180%] transform-gpu"
