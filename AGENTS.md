@@ -86,7 +86,9 @@ src/
 ├── data/                 nakliyatData (statik veri / sabitler)
 ├── types.ts              TypeScript interface'leri
 ├── lib/                  supabase client
-└── assets/               asansorPhoto.ts (sabit URL)
+└── assets/               asansorPhoto.ts (sabit SVG data URI)
+public/
+└── images/               14 adet gerçek firma JPEG fotoğrafı (eski repodan alındı)
 ```
 
 ---
@@ -113,6 +115,20 @@ src/
 
 ### WhatsApp İkonları
 - Gerçek WhatsApp SVG (`ui/WhatsAppIcon.tsx`) kullanılır, lucide-react Send değil
+
+---
+
+### Görseller
+- **Hero arkaplanı**: Unsplash remote URL (`backgroundImage` inline style)
+- **Hizmetler & Galeri**: Çoğu Unsplash URL + asansör SVG data URI
+- **`public/images/`**: Eski `52mert/aganakliyat` reposundan alınan 14 adet gerçek firma fotoğrafı (JPEG)
+- **Kullanılmayan görseller**: Eski repodaki `.jpeg` dosyaları projede aktif kullanılmıyor; `public/images/`'e kopyalandı, `nakliyatData.ts`'deki URL'ler güncellenmeyi bekliyor
+- **Gelecek planı**: Görseller Supabase Storage'a taşınıp admin panelinden yönetilecek
+
+### Pricing Config
+- `updatePricingConfig` (`AppContext.tsx`) artık `Promise<boolean>` döndürür
+- Başarısız olursa state eski haline döner, admin panelinde kırmızı "kaydedilemedi" uyarısı çıkar
+- `handleSavePricing` (`AdminPage.tsx`): `useEffect` ile `pricingForm` senkronizasyonu eklendi
 
 ---
 
