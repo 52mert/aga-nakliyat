@@ -36,7 +36,7 @@ export default function Hero() {
         <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-white/70 to-white dark:via-slate-950/70 dark:to-slate-950" />
 
         {/* Bottom fade to blend into next section */}
-        <div className="absolute bottom-0 inset-x-0 h-32 z-[3] pointer-events-none bg-gradient-to-t from-white dark:from-slate-950 to-transparent" />
+        <div className="absolute bottom-0 inset-x-0 h-32 lg:h-64 z-[3] pointer-events-none bg-gradient-to-t from-white dark:from-slate-950 to-transparent" />
 
         <motion.div
           className="relative z-[2] text-center w-full sm:max-w-[820px] px-4 sm:px-8 md:px-10 py-6 sm:py-9 md:py-11 rounded-[32px] border shadow-2xl bg-white/88 dark:bg-slate-900/65 border-slate-300/90 dark:border-white/18 shadow-slate-950/12 dark:shadow-black/60 backdrop-blur-[20px] saturate-[180%] transform-gpu"
