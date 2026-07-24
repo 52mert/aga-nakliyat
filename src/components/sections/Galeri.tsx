@@ -226,13 +226,14 @@ export default function Galeri() {
             className="relative w-full max-w-3xl max-h-[85dvh] bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col mx-auto my-auto z-10"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative w-full aspect-[16/10] sm:aspect-video bg-slate-950 flex items-center justify-center overflow-hidden">
+            <div className="relative w-full aspect-[4/3] sm:aspect-video bg-slate-950 flex items-center justify-center overflow-hidden">
               <img
                 src={filteredItems[selectedImageIndex].image}
                 alt={filteredItems[selectedImageIndex].title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-[center_35%]"
                 referrerPolicy="no-referrer"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/40 pointer-events-none" />
             </div>
 
             <div className="p-1 sm:p-6 bg-slate-900 border-t border-slate-800 flex flex-col sm:flex-row items-center sm:items-center justify-center sm:justify-between gap-2 sm:gap-4">
