@@ -1,5 +1,4 @@
-﻿import type { Service, GalleryItem } from '../types';
-import { ASANSOR_PHOTO_URL } from '../assets/asansorPhoto';
+import type { Service, GalleryItem } from '../types';
 
 export const COMPANY_INFO = {
   name: 'Aga Nakliyat',
@@ -20,7 +19,7 @@ export const SERVICES: Service[] = [
     title: 'Evden Eve Nakliyat',
     description: 'Fatsa, Ünye ve tüm Ordu bölgesinde eşyalarınız özenle ambalajlanarak yeni adresinize güvenle taşınır.',
     iconName: 'Home',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+    image: '/images/foto.jpeg',
     features: ['Marangozlu söküm ve montaj', 'Havalı patpat ile özel paketleme', 'Sigortalı ve sözleşmeli taşıma', 'Anahtar teslim yerleşim'],
     popular: true
   },
@@ -29,7 +28,7 @@ export const SERVICES: Service[] = [
     title: 'Mobil Asansörlü Taşımacılık',
     description: '25. kata kadar ulaşan yüksek tonajlı modüler mobil hidrolik asansörlerimizle eşyalarınız çizilmeden ve bina içi yıpranmadan taşınır.',
     iconName: 'Layers',
-    image: ASANSOR_PHOTO_URL,
+    image: '/images/asansor.jpeg',
     features: ['25. Kata kadar erişim imkanı', 'Çizilme ve kırılma riskini sıfıra indirir', 'Bina yönetimi ile sorunsuz taşıma', '%50 daha hızlı nakliye süresi'],
     popular: true
   },
@@ -38,7 +37,7 @@ export const SERVICES: Service[] = [
     title: 'Şehirlerarası Nakliyat',
     description: 'Ordu ve Karadeniz bölgesinden Türkiye’nin 81 iline kapalı kasa özel süspansiyonlu araçlarımızla güvenli nakliye.',
     iconName: 'Truck',
-    image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=800&q=80',
+    image: '/images/kamyon.jpeg',
     features: ['GPS ile anlık araç takibi', 'Zamanında adrese teslimat garantisi', 'Kasko ve nakliyat sigortası', 'Direkt veya parça eşya taşıma'],
     popular: false
   },
@@ -47,7 +46,7 @@ export const SERVICES: Service[] = [
     title: 'Profesyonel Ambalajlama',
     description: 'Mobilya, beyaz eşya, cam ve hassas eşyalarınız çift kat balonlu patpat ve streç ile sıfır hasar prensibiyle paketlenir.',
     iconName: 'Package',
-    image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=800&q=80',
+    image: '/images/foto2.jpeg',
     features: ['Hijyenik sıfır ambalaj malzemeleri', 'Kırılacak eşyalara köpüklü koruma', 'Elbise dolaplı özel taşıma kolileri', 'Etiketli ve düzenli paketleme'],
     popular: false
   },
@@ -56,7 +55,7 @@ export const SERVICES: Service[] = [
     title: 'Ofis ve İşyeri Taşıma',
     description: 'Şirket, büro, kurumsal dosya ve hassas teknolojik cihazlarınızı iş akışınızı aksatmadan hızlıca taşıyoruz.',
     iconName: 'Building2',
-    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',
+    image: '/images/aganakliyat2.jpeg',
     features: ['Etiketli klasör ve arşiv nakli', 'Elektronik cihazlara özel koruma', 'Mesai saatleri dışında taşıma opsiyonu', 'Sözleşmeli ve gizlilik esaslı'],
     popular: false
   },
@@ -65,7 +64,7 @@ export const SERVICES: Service[] = [
     title: 'Parça Eşya Taşımacılığı',
     description: 'Aynı güzergahtaki az sayıdaki eşyalarınız için ekonomik ve hızlı parça taşıma çözümü sunuyoruz.',
     iconName: 'Box',
-    image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=800&q=80',
+    image: '/images/kamyonici.jpeg',
     features: ['Bütçe dostu paylaşım opsiyonu', 'Fatsa-Ünye-Ordu arası günlük sefer', 'Küçük hacimli hızlı nakliye', 'Kapıdan kapıya teslimat'],
     popular: false
   }
@@ -76,43 +75,43 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: '1',
     title: 'Aga Nakliyat Asansörlü Araç',
     category: 'asansor',
-    image: ASANSOR_PHOTO_URL,
+    image: '/images/asansor2.jpeg',
     description: '25. katta bina dışından yüksek tonajlı asansörlü nakliyat operasyonumuz.'
   },
   {
     id: '2',
     title: 'Özel Balonlu Ambalajlama',
     category: 'ambalaj',
-    image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80',
+    image: '/images/foto2.jpeg',
     description: 'Koltuk takımı ve beyaz eşyaların patpat ile sıfır hasar paketlemesi.'
   },
   {
     id: '3',
     title: 'Kapalı Kasa Nakliye Kamyonumuz',
     category: 'araclar',
-    image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=800&q=80',
+    image: '/images/kamyon2.jpeg',
     description: 'Hijyenik ahşap kaplamalı, çelik kasa evden eve taşıma aracımız.'
   },
   {
     id: '4',
     title: 'Fatsa Evden Eve Taşıma',
     category: 'tasima',
-    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80',
+    image: '/images/foto.jpeg',
     description: 'Fatsa Sahil bölgesinde site içi asansörlü nakliyat çalışması.'
   },
   {
     id: '5',
     title: 'Ünye Asansör Kurulumu',
     category: 'asansor',
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+    image: '/images/asansoryukardancekim.jpeg',
     description: 'Ünye dar sokaklarda dikey dış cephe nakliye asansörü.'
   },
   {
     id: '6',
-    title: 'Marangozlu Mobilya Demontajı',
-    category: 'ambalaj',
-    image: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=800&q=80',
-    description: 'Gardırop ve yatak odası takımlarının profesyonel ustalarımızca sökümü.'
+    title: 'Araç İçi İstifleme',
+    category: 'araclar',
+    image: '/images/kamyonici.jpeg',
+    description: 'Eşyalarınızın sarsıntısız taşınması için özel dizayn edilmiş araç içi istifleme.'
   }
 ];
 
@@ -148,4 +147,3 @@ export const WHY_US_REASONS = [
     icon: 'BadgePercent'
   }
 ];
-
