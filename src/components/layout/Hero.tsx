@@ -29,7 +29,7 @@ export default function Hero() {
    <section id="anasayfa" ref={sectionRef} className="relative h-[70vh] lg:h-[130vh] w-full overflow-clip bg-center bg-cover bg-no-repeat bg-slate-50 dark:bg-slate-950 transition-colors"
       style={{
         /* DÜZELTME BURADA: Unsplash linki yerine senin kendi kamyon fotoğrafın eklendi ve merkeze sabitlendi */
-        backgroundImage: `linear-gradient(to bottom, rgba(248,250,252,0.65), rgba(248,250,252,0.95)), url('/images/aganakliyat2.jpeg')`,
+        backgroundImage: `linear-gradient(to bottom, rgba(248,250,252,0.65), rgba(248,250,252,0.95)), url('/images/kamyon.jpeg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
         backgroundAttachment: 'fixed',
