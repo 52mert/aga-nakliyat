@@ -28,7 +28,7 @@ export const SERVICES: Service[] = [
     title: 'Mobil Asansörlü Taşımacılık',
     description: '25. kata kadar ulaşan yüksek tonajlı modüler mobil hidrolik asansörlerimizle eşyalarınız çizilmeden ve bina içi yıpranmadan taşınır.',
     iconName: 'Layers',
-    image: '/images/asansor.jpeg',
+    image: '/images/asansor2.jpeg',
     features: ['25. Kata kadar erişim imkanı', 'Çizilme ve kırılma riskini sıfıra indirir', 'Bina yönetimi ile sorunsuz taşıma', '%50 daha hızlı nakliye süresi'],
     popular: true
   },
@@ -46,7 +46,7 @@ export const SERVICES: Service[] = [
     title: 'Profesyonel Ambalajlama',
     description: 'Mobilya, beyaz eşya, cam ve hassas eşyalarınız çift kat balonlu patpat ve streç ile sıfır hasar prensibiyle paketlenir.',
     iconName: 'Package',
-    image: '/images/foto2.jpeg',
+    image: '/images/paketleme2.jpeg',
     features: ['Hijyenik sıfır ambalaj malzemeleri', 'Kırılacak eşyalara köpüklü koruma', 'Elbise dolaplı özel taşıma kolileri', 'Etiketli ve düzenli paketleme'],
     popular: false
   },
