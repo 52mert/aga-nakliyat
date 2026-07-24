@@ -64,14 +64,14 @@ export default function Galeri() {
   };
 
   return (
-    <section id="galeri" className="py-24 bg-white dark:bg-slate-950 text-slate-900 dark:text-white relative border-t border-slate-200 dark:border-slate-900 transition-colors">
-      <div className="max-w-7xl mx-auto pl-[46px] pr-4 sm:px-6 lg:px-8">
+    <section id="galeri" className="py-24 bg-white dark:bg-slate-950 text-slate-900 dark:text-white relative overflow-hidden border-t border-slate-200 dark:border-slate-900 transition-colors">
+      <div className="max-w-7xl mx-auto px-4 lg:pl-[46px] lg:pr-8">
         {/* Section Title */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <motion.span 
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-100 dark:bg-red-950/80 border border-red-200 dark:border-red-800/50 text-red-600 dark:text-red-400 font-semibold text-xs tracking-wider uppercase mb-4"
           >
@@ -80,7 +80,7 @@ export default function Galeri() {
           <motion.h2 
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight"
           >
@@ -89,7 +89,7 @@ export default function Galeri() {
           <motion.p 
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-4 text-base text-slate-600 dark:text-slate-400"
           >
@@ -101,7 +101,7 @@ export default function Galeri() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, margin: "-50px" }}
+          viewport={{ once: false, margin: "-50px", amount: 0.1 }}
           transition={{ duration: 0.5, delay: 0.25 }}
           className="flex items-center justify-center gap-2 flex-wrap mb-10"
         >
@@ -124,13 +124,13 @@ export default function Galeri() {
         <div className="flex items-center justify-end mb-6">
           <div className="flex items-center gap-2">
             <button onClick={() => scroll('left')} disabled={!canScrollLeft}
-              className={`w-10 h-10 rounded-2xl border flex items-center justify-center transition-all cursor-pointer ${
+              className={`w-11 h-11 rounded-2xl border flex items-center justify-center transition-all cursor-pointer ${
                 canScrollLeft ? 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white hover:bg-red-600 hover:text-white shadow-sm active:scale-95' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-300 dark:text-slate-700 cursor-not-allowed opacity-50'
               }`}>
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button onClick={() => scroll('right')} disabled={!canScrollRight}
-              className={`w-10 h-10 rounded-2xl border flex items-center justify-center transition-all cursor-pointer ${
+              className={`w-11 h-11 rounded-2xl border flex items-center justify-center transition-all cursor-pointer ${
                 canScrollRight ? 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white hover:bg-red-600 hover:text-white shadow-sm active:scale-95' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-300 dark:text-slate-700 cursor-not-allowed opacity-50'
               }`}>
               <ChevronRight className="w-5 h-5" />
@@ -140,18 +140,18 @@ export default function Galeri() {
 
         {/* Image Horizontal Track */}
         <div ref={scrollContainerRef}
-          className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory pb-4 -mx-4 px-[calc(50vw-190px)] sm:mx-0 sm:px-0 scroll-smooth"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', scrollPadding: '0 calc(50vw - 190px)' }}>
+          className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 scroll-smooth touch-pan-x"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', touchAction: 'pan-x pan-y' }}>
           {filteredItems.map((item, index) => {
             return (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-30px" }}
+                viewport={{ once: false, margin: "-30px", amount: 0.1 }}
                 transition={{ duration: 0.5, delay: (index % 2) * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 onClick={() => setSelectedImageIndex(index)}
-                className="group relative w-[75vw] sm:w-[380px] lg:w-[calc(33.33%-16px)] shrink-0 snap-center h-56 sm:h-64 lg:h-72 rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 border border-slate-200 dark:border-slate-800 cursor-pointer shadow-xl hover:border-red-600/50 transition-all duration-300 transform-gpu"
+                className="group relative w-[calc(100vw-32px)] sm:w-[360px] lg:w-[calc(33.33%-16px)] shrink-0 snap-center h-56 sm:h-64 lg:h-72 rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 border border-slate-200 dark:border-slate-800 cursor-pointer shadow-xl hover:border-red-600/50 transition-all duration-300 transform-gpu"
               >
                 <img
                   src={item.image}
@@ -188,13 +188,13 @@ export default function Galeri() {
       {/* Lightbox Modal */}
       {selectedImageIndex !== null && filteredItems[selectedImageIndex] && (
         <div 
-          className="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-0 sm:p-4 animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200 w-full overflow-hidden"
           onClick={() => setSelectedImageIndex(null)}
         >
           {/* Close Button */}
           <button
             onClick={() => setSelectedImageIndex(null)}
-            className="absolute top-[10px] right-[50px] sm:top-6 sm:right-6 w-7 h-7 sm:w-12 sm:h-12 rounded-full bg-slate-900 border border-slate-700 text-white flex items-center justify-center hover:bg-red-600 transition-colors z-20 cursor-pointer"
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-slate-900 border border-slate-700 text-white flex items-center justify-center hover:bg-red-600 transition-colors z-20 cursor-pointer"
           >
             <X className="w-3.5 h-3.5 sm:w-6 sm:h-6" />
           </button>
@@ -205,9 +205,9 @@ export default function Galeri() {
               e.stopPropagation();
               handlePrev();
             }}
-            className="absolute left-0.5 sm:left-4 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-12 sm:h-12 rounded-full bg-slate-900/80 border border-slate-700 text-white flex items-center justify-center hover:bg-red-600 transition-colors z-20 cursor-pointer"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-slate-900/80 border border-slate-700 text-white flex items-center justify-center hover:bg-red-600 transition-colors z-20 cursor-pointer"
           >
-            <ChevronLeft className="w-3 h-3 sm:w-6 sm:h-6" />
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
           {/* Next Button */}
@@ -216,23 +216,21 @@ export default function Galeri() {
               e.stopPropagation();
               handleNext();
             }}
-            className="absolute right-[50px] sm:right-4 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-12 sm:h-12 rounded-full bg-slate-900/80 border border-slate-700 text-white flex items-center justify-center hover:bg-red-600 transition-colors z-20 cursor-pointer"
+            className="absolute right-4 sm:right-4 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-slate-900/80 border border-slate-700 text-white flex items-center justify-center hover:bg-red-600 transition-colors z-20 cursor-pointer"
           >
-            <ChevronRight className="w-3 h-3 sm:w-6 sm:h-6" />
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
           {/* Modal Image Box */}
           <div 
-            className="relative max-w-4xl w-[calc(100%-50px)] sm:w-full max-h-[75dvh] bg-slate-900 rounded-3xl overflow-y-auto overflow-x-hidden border border-slate-800 shadow-2xl flex flex-col mr-[50px] sm:mr-0"
+            className="relative w-full max-w-3xl max-h-[85dvh] bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col mx-auto my-auto z-10"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative h-[28dvh] sm:h-[60vh] max-h-[150px] sm:max-h-[500px] shrink-0">
+            <div className="relative flex-1 min-h-[220px] sm:min-h-[380px] bg-slate-950 flex items-center justify-center p-2 w-full">
               <img
                 src={filteredItems[selectedImageIndex].image}
                 alt={filteredItems[selectedImageIndex].title}
-                width={800}
-                height={600}
-                className="w-full h-full object-contain bg-slate-950"
+                className="max-w-full max-h-[50dvh] object-contain rounded-2xl mx-auto"
                 referrerPolicy="no-referrer"
               />
             </div>

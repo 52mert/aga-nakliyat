@@ -143,11 +143,11 @@ export default function Sidebar({ onOpenCalculator }: SidebarProps) {
           </nav>
 
           {/* Right Action Buttons */}
-          <div className="flex items-center gap-1 sm:gap-3 ml-auto pr-[30px] sm:pr-0">
+          <div className="flex items-center gap-1 sm:gap-3 ml-auto sm:pr-0 flex-nowrap shrink-0">
             {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 dark:bg-slate-900 text-amber-500 dark:text-amber-400 hover:text-amber-600 dark:hover:text-amber-300 border border-slate-200 dark:border-slate-800 flex items-center justify-center transition-all cursor-pointer shadow-md active:scale-95"
+              className="min-h-[44px] min-w-[44px] sm:w-10 sm:h-10 rounded-xl bg-slate-100 dark:bg-slate-900 text-amber-500 dark:text-amber-400 hover:text-amber-600 dark:hover:text-amber-300 border border-slate-200 dark:border-slate-800 flex items-center justify-center transition-all cursor-pointer shadow-md active:scale-95"
               title={theme === 'dark' ? 'Açık Mod (Light)' : 'Koyu Mod (Dark)'}
               aria-label="Mod Değiştir"
             >
@@ -160,12 +160,12 @@ export default function Sidebar({ onOpenCalculator }: SidebarProps) {
               className="hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:brightness-110 text-slate-950 font-black text-xs shadow-lg shadow-orange-500/20 active:scale-95 transition-all cursor-pointer"
             >
               <Calculator className="w-4 h-4" />
-              <span>Teklif Hesapla</span>
+              <span className="hidden min-[400px]:inline">Teklif Hesapla</span>
             </button>
 
             <a
               href={`tel:${companyInfo.phonePrimaryRaw}`}
-              className="hidden sm:flex items-center justify-center gap-1.5 sm:gap-2 w-9 h-9 sm:w-auto sm:px-4 sm:py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs shadow-lg shadow-red-900/40 active:scale-95 transition-all"
+              className="hidden sm:flex items-center justify-center gap-1.5 sm:gap-2 min-h-[44px] min-w-[44px] sm:w-auto sm:px-4 sm:py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs shadow-lg shadow-red-900/40 active:scale-95 transition-all"
             >
               <PhoneCall className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
               <span className="hidden sm:inline">{companyInfo.phonePrimary}</span>
@@ -175,7 +175,7 @@ export default function Sidebar({ onOpenCalculator }: SidebarProps) {
               href={`https://wa.me/${companyInfo.whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-900/30 transition-all"
+              className="hidden sm:flex items-center justify-center min-h-[44px] min-w-[44px] sm:w-10 sm:h-10 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-900/30 transition-all"
               aria-label="WhatsApp"
             >
               <WhatsAppIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -183,7 +183,7 @@ export default function Sidebar({ onOpenCalculator }: SidebarProps) {
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white flex items-center justify-center active:scale-95 transition-transform"
+              className="lg:hidden shrink-0 ml-0.5 min-h-[44px] min-w-[44px] sm:w-10 sm:h-10 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white flex items-center justify-center active:scale-95 transition-transform"
               aria-label="Menü"
             >
               {mobileOpen ? <X className="w-4 h-4 sm:w-5 sm:h-5" /> : <Menu className="w-4 h-4 sm:w-5 sm:h-5" />}
@@ -217,14 +217,14 @@ export default function Sidebar({ onOpenCalculator }: SidebarProps) {
               <div className="flex items-center gap-2">
                 <button
                   onClick={toggleTheme}
-                  className="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-amber-500 dark:text-amber-400 flex items-center justify-center"
+                  className="min-h-[44px] min-w-[44px] rounded-lg bg-slate-100 dark:bg-slate-800 text-amber-500 dark:text-amber-400 flex items-center justify-center"
                   title="Mod Değiştir"
                 >
                   {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-slate-700" />}
                 </button>
                 <button
                   onClick={() => setMobileOpen(false)}
-                  className="w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 flex items-center justify-center"
+                  className="min-h-[44px] min-w-[44px] rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 flex items-center justify-center"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -232,7 +232,7 @@ export default function Sidebar({ onOpenCalculator }: SidebarProps) {
             </div>
 
             {/* Mobile Nav Links */}
-            <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            <nav className="flex-1 px-4 py-6 space-y-4 overflow-y-auto">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeSection === item.id;
@@ -247,7 +247,8 @@ export default function Sidebar({ onOpenCalculator }: SidebarProps) {
                     }`}
                   >
                     <Icon className="w-5 h-5 shrink-0" />
-                    <span>{item.label}</span>
+                    <span className="flex-1 text-left">{item.label}</span>
+                    <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
                   </button>
                 );
               })}

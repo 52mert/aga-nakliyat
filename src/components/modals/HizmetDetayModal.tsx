@@ -12,9 +12,9 @@ export default function HizmetDetayModal({ service, onClose }: HizmetDetayModalP
   const { companyInfo } = useApp();
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
       <div
-        className="relative w-full max-w-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-y-auto overflow-x-hidden shadow-2xl max-h-[75dvh] flex flex-col"
+        className="relative w-full max-w-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-800 rounded-t-3xl sm:rounded-3xl overflow-y-auto overflow-x-hidden shadow-2xl max-h-[90dvh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative h-16 sm:h-60 shrink-0">
@@ -30,7 +30,7 @@ export default function HizmetDetayModal({ service, onClose }: HizmetDetayModalP
 
           <button
             onClick={onClose}
-            className="absolute top-[10px] right-[10px] sm:top-4 sm:right-4 w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-slate-950/80 border border-slate-700 text-white flex items-center justify-center hover:bg-red-600 transition-colors cursor-pointer"
+            className="absolute top-[10px] right-[10px] sm:top-4 sm:right-4 min-h-[44px] min-w-[44px] sm:w-10 sm:h-10 rounded-full bg-slate-950/80 border border-slate-700 text-white flex items-center justify-center hover:bg-red-600 transition-colors cursor-pointer"
           >
             <X className="w-3 h-3 sm:w-5 sm:h-5" />
           </button>

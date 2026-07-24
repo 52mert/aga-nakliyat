@@ -66,13 +66,13 @@ export default function Hizmetler() {
       <div className="absolute top-1/4 left-0 w-96 h-96 bg-red-900/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 right-0 w-96 h-96 bg-blue-900/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto pl-[46px] pr-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 lg:pl-[46px] lg:pr-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.span 
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-100 dark:bg-red-950/80 border border-red-200 dark:border-red-800/50 text-red-600 dark:text-red-400 font-semibold text-xs tracking-wider uppercase mb-4"
           >
@@ -81,7 +81,7 @@ export default function Hizmetler() {
           <motion.h2 
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight"
           >
@@ -90,7 +90,7 @@ export default function Hizmetler() {
           <motion.p 
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-4 text-lg text-slate-600 dark:text-slate-400 leading-relaxed"
           >
@@ -102,13 +102,13 @@ export default function Hizmetler() {
         <div className="flex items-center justify-end mb-6">
           <div className="flex items-center gap-2">
             <button onClick={() => scroll('left')} disabled={!canScrollLeft}
-              className={`w-10 h-10 rounded-2xl border flex items-center justify-center transition-all cursor-pointer ${
+              className={`w-11 h-11 rounded-2xl border flex items-center justify-center transition-all cursor-pointer ${
                 canScrollLeft ? 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white hover:bg-red-600 hover:text-white shadow-sm active:scale-95' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-300 dark:text-slate-700 cursor-not-allowed opacity-50'
               }`}>
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button onClick={() => scroll('right')} disabled={!canScrollRight}
-              className={`w-10 h-10 rounded-2xl border flex items-center justify-center transition-all cursor-pointer ${
+              className={`w-11 h-11 rounded-2xl border flex items-center justify-center transition-all cursor-pointer ${
                 canScrollRight ? 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white hover:bg-red-600 hover:text-white shadow-sm active:scale-95' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-300 dark:text-slate-700 cursor-not-allowed opacity-50'
               }`}>
               <ChevronRight className="w-5 h-5" />
@@ -118,8 +118,8 @@ export default function Hizmetler() {
 
         {/* Service Cards Horizontal Track */}
         <div ref={scrollContainerRef}
-          className="flex gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory pb-4 -mx-4 px-[calc(50vw-200px)] sm:mx-0 sm:px-0 scroll-smooth"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', scrollPadding: '0 calc(50vw - 200px)' }}>
+          className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 scroll-smooth touch-pan-x"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', touchAction: 'pan-x pan-y' }}>
           {SERVICES.map((service, index) => {
             const IconComponent = iconMap[service.iconName] || Truck;
 
@@ -128,9 +128,9 @@ export default function Hizmetler() {
                 key={service.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-30px" }}
+                viewport={{ once: false, margin: "-30px", amount: 0.1 }}
                 transition={{ duration: 0.5, delay: (index % 2) * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative w-[85vw] sm:w-[400px] lg:w-[calc(33.33%-16px)] shrink-0 snap-center bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-red-600/50 rounded-3xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl flex flex-col justify-between transform-gpu"
+                className="group relative w-[calc(100vw-32px)] sm:w-[400px] lg:w-[calc(33.33%-16px)] shrink-0 snap-center bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-red-600/50 rounded-3xl overflow-hidden transition-all duration-300 sm:hover:-translate-y-2 hover:shadow-2xl flex flex-col justify-between transform-gpu"
               >
                 {service.popular && (
                   <div className="absolute top-4 right-4 z-20 bg-red-600 text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">

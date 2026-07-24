@@ -19,7 +19,7 @@ function MainApp() {
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${
+    <div className={`min-h-screen w-full max-w-full overflow-hidden transition-colors duration-300 ${
       theme === 'dark' 
         ? 'bg-slate-950 text-slate-100 selection:bg-red-600 selection:text-white' 
         : 'bg-slate-50 text-slate-900 selection:bg-red-600 selection:text-white'

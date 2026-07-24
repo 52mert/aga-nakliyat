@@ -38,23 +38,23 @@ export default function FloatingButtons() {
       </div>
 
       {/* Mobile Sticky Bottom Communication Bar */}
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-md border-t border-slate-800 pl-2 pr-[50px] flex items-center gap-1.5 text-white">
+      <div className="sm:hidden fixed bottom-0 inset-x-0 w-full z-40 bg-slate-950/95 backdrop-blur-md border-t border-slate-800/80 px-3 py-2 flex items-center justify-between gap-2.5 text-white pb-[max(0.6rem,env(safe-area-inset-bottom))] shadow-2xl mx-auto">
         <a
           href={`tel:${companyInfo.phonePrimaryRaw}`}
-          className="flex-1 py-2.5 bg-red-600 active:bg-red-700 text-white rounded-xl font-black text-[0.65rem] text-center flex items-center justify-center gap-1.5 shadow-lg shadow-red-900/40"
+          className="flex-1 py-3 bg-red-600 active:bg-red-700 active:scale-98 text-white rounded-xl font-black text-xs text-center flex items-center justify-center gap-2 shadow-lg shadow-red-950/50 transition-all min-h-[44px]"
         >
-          <PhoneCall className="w-3.5 h-3.5" />
-          <span>Hemen Ara</span>
+          <PhoneCall className="w-4 h-4 shrink-0" />
+          <span className="whitespace-nowrap">Hemen Ara</span>
         </a>
 
         <a
           href={`https://wa.me/${companyInfo.whatsappNumber}?text=${encodeURIComponent('Merhaba Aga Nakliyat, evden eve nakliye teklifi almak istiyorum.')}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 py-2.5 bg-emerald-600 active:bg-emerald-700 text-white rounded-xl font-black text-[0.65rem] text-center flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-900/30 animate-[shake-cycle_4s_ease-in-out_infinite]"
+          className="flex-1 py-3 bg-emerald-600 active:bg-emerald-700 active:scale-98 text-white rounded-xl font-black text-xs text-center flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/40 transition-all min-h-[44px]"
         >
-          <WhatsAppIcon className="w-3.5 h-3.5" />
-          <span>WhatsApp Hat</span>
+          <WhatsAppIcon className="w-4 h-4 shrink-0" />
+          <span className="whitespace-nowrap">WhatsApp Hat</span>
         </a>
       </div>
     </>

@@ -47,9 +47,9 @@ export default function TeklifModal({ isOpen, onClose }: TeklifModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
       <div 
-        className="relative w-full max-w-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-2xl max-h-[92vh] flex flex-col"
+        className="relative w-full max-w-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-800 rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl max-h-[90dvh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
@@ -70,7 +70,7 @@ export default function TeklifModal({ isOpen, onClose }: TeklifModalProps) {
 
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 dark:bg-slate-800 dark:hover:bg-red-600 text-white flex items-center justify-center transition-colors cursor-pointer"
+            className="min-h-[44px] min-w-[44px] rounded-full bg-white/20 hover:bg-white/30 dark:bg-slate-800 dark:hover:bg-red-600 text-white flex items-center justify-center transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -223,21 +223,21 @@ export default function TeklifModal({ isOpen, onClose }: TeklifModalProps) {
         </div>
 
         {/* Modal Action Footer */}
-        <div className="p-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center gap-3 flex-wrap">
+        <div className="p-3.5 sm:p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 shrink-0">
           <button
             onClick={handleSendWhatsApp}
-            className="flex-1 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-extrabold text-sm flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
+            className="flex-1 py-3 px-3 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white rounded-xl font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer min-h-[44px]"
           >
-            <WhatsAppIcon className="w-4 h-4" />
-            <span>Bu Teklifle WhatsApp'tan İletişime Geçin</span>
+            <WhatsAppIcon className="w-4.5 h-4.5 shrink-0" />
+            <span className="whitespace-nowrap">WhatsApp ile Teklif Al</span>
           </button>
 
           <a
             href={`tel:${companyInfo.phonePrimaryRaw}`}
-            className="px-6 py-3.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all"
+            className="px-4 py-3 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white rounded-xl font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all min-h-[44px] shrink-0"
           >
-            <PhoneCall className="w-4 h-4" />
-            <span>Hemen Ara</span>
+            <PhoneCall className="w-4 h-4 shrink-0" />
+            <span className="whitespace-nowrap">Hemen Ara</span>
           </a>
         </div>
       </div>

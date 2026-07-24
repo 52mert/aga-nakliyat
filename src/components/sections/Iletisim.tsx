@@ -52,7 +52,7 @@ export default function Iletisim() {
   };
 
   return (
-    <section id="iletisim" className="py-24 bg-white dark:bg-slate-950 text-slate-900 dark:text-white relative border-t border-slate-200 dark:border-slate-900 transition-colors">
+    <section id="iletisim" className="py-24 bg-white dark:bg-slate-950 text-slate-900 dark:text-white relative overflow-hidden border-t border-slate-200 dark:border-slate-900 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -60,7 +60,7 @@ export default function Iletisim() {
           <motion.span 
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-100 dark:bg-red-950/80 border border-red-200 dark:border-red-800/50 text-red-600 dark:text-red-400 font-semibold text-xs tracking-wider uppercase mb-4"
           >
@@ -69,7 +69,7 @@ export default function Iletisim() {
           <motion.h2 
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight"
           >
@@ -78,7 +78,7 @@ export default function Iletisim() {
           <motion.p 
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-4 text-base text-slate-600 dark:text-slate-400"
           >
@@ -92,7 +92,7 @@ export default function Iletisim() {
           <motion.div 
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, margin: "-30px" }}
+            viewport={{ once: false, margin: "-30px", amount: 0.1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             style={{ willChange: 'transform, opacity' }}
             className="lg:col-span-5 space-y-6 transform-gpu"
@@ -187,10 +187,10 @@ export default function Iletisim() {
           <motion.div 
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, margin: "-30px" }}
+            viewport={{ once: false, margin: "-30px", amount: 0.1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             style={{ willChange: 'transform, opacity' }}
-            className="lg:col-span-7 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-xl dark:shadow-2xl relative transform-gpu"
+            className="lg:col-span-7 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-md sm:shadow-xl dark:sm:shadow-2xl relative transform-gpu"
           >
             <div className="flex items-center gap-2 mb-6">
               <Sparkles className="w-5 h-5 text-amber-500 dark:text-amber-400" />

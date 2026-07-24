@@ -48,14 +48,14 @@ export default function Yorumlar() {
 
   return (
     <section id="yorumlar" className="py-24 bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-white relative overflow-hidden border-t border-slate-200 dark:border-slate-800 transition-colors">
-      <div className="max-w-7xl mx-auto pl-[46px] pr-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 lg:pl-[46px] lg:pr-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
           <motion.span 
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-100 dark:bg-red-950/80 border border-red-200 dark:border-red-800/50 text-red-600 dark:text-red-400 font-semibold text-xs tracking-wider uppercase mb-4"
           >
@@ -64,7 +64,7 @@ export default function Yorumlar() {
           <motion.h2 
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight"
           >
@@ -73,7 +73,7 @@ export default function Yorumlar() {
           <motion.p 
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-4 text-base text-slate-600 dark:text-slate-400"
           >
@@ -83,7 +83,7 @@ export default function Yorumlar() {
           <motion.div 
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="mt-6 flex flex-wrap items-center justify-center gap-4"
           >
@@ -116,7 +116,7 @@ export default function Yorumlar() {
               <button
                 onClick={() => scroll('left')}
                 disabled={!canScrollLeft}
-                className={`w-10 h-10 rounded-2xl border flex items-center justify-center transition-all cursor-pointer ${
+                className={`w-11 h-11 rounded-2xl border flex items-center justify-center transition-all cursor-pointer ${
                   canScrollLeft 
                     ? 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white shadow-sm active:scale-95' 
                     : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-300 dark:text-slate-700 cursor-not-allowed opacity-50'
@@ -128,7 +128,7 @@ export default function Yorumlar() {
               <button
                 onClick={() => scroll('right')}
                 disabled={!canScrollRight}
-                className={`w-10 h-10 rounded-2xl border flex items-center justify-center transition-all cursor-pointer ${
+                className={`w-11 h-11 rounded-2xl border flex items-center justify-center transition-all cursor-pointer ${
                   canScrollRight 
                     ? 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white shadow-sm active:scale-95' 
                     : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-300 dark:text-slate-700 cursor-not-allowed opacity-50'
@@ -143,18 +143,18 @@ export default function Yorumlar() {
           {/* Testimonials Horizontal Slider Track */}
           <div
             ref={scrollContainerRef}
-            className="flex gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory py-4 -mx-4 px-[calc(50vw-210px)] sm:mx-0 sm:px-0 scroll-smooth"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', scrollPadding: '0 calc(50vw - 210px)' }}
+            className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-none snap-x snap-mandatory py-4 -mx-4 px-4 sm:mx-0 sm:px-0 scroll-smooth touch-pan-x"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', touchAction: 'pan-x pan-y' }}
           >
             {approvedTestimonials.map((testimonial, index) => (
               <motion.div
                 key={testimonial.id}
                 initial={{ opacity: 0, y: 25, scale: 0.97 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: false, margin: "-30px" }}
+                viewport={{ once: false, margin: "-30px", amount: 0.1 }}
                 transition={{ duration: 0.5, delay: (index % 2) * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 style={{ willChange: 'transform, opacity' }}
-                className="w-[85vw] sm:w-[420px] md:w-[calc(50%-12px)] shrink-0 snap-center p-7 sm:p-8 rounded-3xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 hover:border-red-500/50 dark:hover:border-red-900/50 shadow-md dark:shadow-2xl transition-all duration-300 relative flex flex-col justify-between transform-gpu"
+                className="w-[calc(100vw-32px)] sm:w-[420px] md:w-[calc(50%-12px)] shrink-0 snap-center p-5 sm:p-7 rounded-3xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 hover:border-red-500/50 dark:hover:border-red-900/50 shadow-md dark:shadow-2xl transition-all duration-300 relative flex flex-col justify-between transform-gpu"
               >
                 {/* Background Watermark Quote (Placed in bottom-right corner to avoid badge overlap) */}
                 <Quote className="absolute bottom-16 right-6 w-12 h-12 text-slate-100 dark:text-slate-800/40 pointer-events-none select-none z-0" />
@@ -173,7 +173,7 @@ export default function Yorumlar() {
                   </div>
 
                   {/* Comment Text */}
-                  <p className="text-slate-800 dark:text-slate-200 text-sm sm:text-base leading-relaxed italic">
+                  <p className="text-slate-800 dark:text-slate-200 text-sm leading-relaxed italic">
                     "{testimonial.comment}"
                   </p>
                 </div>

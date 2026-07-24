@@ -36,7 +36,7 @@ export default function NedenBiz() {
           <motion.div 
             initial={{ opacity: 0, x: -70 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: false, margin: "-50px" }}
+            viewport={{ once: false, margin: "-50px", amount: 0.1 }}
             transition={{ duration: 0.7 }}
             className="lg:col-span-5 space-y-6"
           >
@@ -57,7 +57,7 @@ export default function NedenBiz() {
               <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-50px" }}
+                viewport={{ once: false, margin: "-50px", amount: 0.1 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className="p-4 rounded-2xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 shadow-sm"
               >
@@ -73,7 +73,7 @@ export default function NedenBiz() {
               <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-50px" }}
+                viewport={{ once: false, margin: "-50px", amount: 0.1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="p-4 rounded-2xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 shadow-sm"
               >
@@ -89,7 +89,7 @@ export default function NedenBiz() {
               <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-50px" }}
+                viewport={{ once: false, margin: "-50px", amount: 0.1 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="p-4 rounded-2xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 shadow-sm"
               >
@@ -105,7 +105,7 @@ export default function NedenBiz() {
               <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-50px" }}
+                viewport={{ once: false, margin: "-50px", amount: 0.1 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
                 className="p-4 rounded-2xl bg-white dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 shadow-sm"
               >
@@ -123,7 +123,7 @@ export default function NedenBiz() {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, margin: "-50px" }}
+              viewport={{ once: false, margin: "-50px", amount: 0.1 }}
               transition={{ duration: 0.5, delay: 0.5 }}
               className="p-5 rounded-2xl bg-white dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-4"
             >
@@ -152,7 +152,7 @@ export default function NedenBiz() {
                   key={idx}
                   initial={{ opacity: 0, y: 30, scale: 0.97 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: false, margin: "-30px" }}
+                  viewport={{ once: false, margin: "-30px", amount: 0.1 }}
                   transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
                   style={{ willChange: 'transform, opacity' }}
                   className="p-6 rounded-3xl bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 hover:border-red-500/50 shadow-sm hover:shadow-xl transition-all duration-300 group transform-gpu"
