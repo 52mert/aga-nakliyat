@@ -19,7 +19,7 @@ interface AppContextType {
   isAddReviewOpen: boolean;
   setIsAddReviewOpen: (open: boolean) => void;
   pricingConfig: PricingConfig;
-  updatePricingConfig: (config: PricingConfig) => void;
+  updatePricingConfig: (config: PricingConfig) => Promise<boolean>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);

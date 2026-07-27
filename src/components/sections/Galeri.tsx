@@ -1,16 +1,35 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { GALLERY_ITEMS } from '../../data/nakliyatData';
 import { useApp } from '../../context/AppContext';
+import { supabase } from '../../lib/supabase';
+import type { GalleryItem } from '../../types';
 import { Maximize2, X, ChevronLeft, ChevronRight, Send } from 'lucide-react';
 
 export default function Galeri() {
   const { companyInfo } = useApp();
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+
+  useEffect(() => {
+    supabase.from('gallery').select('*').order('sort_order')
+      .then(({ data }) => {
+        if (data) {
+          setGalleryItems(data.map((item: any) => ({
+            id: String(item.id),
+            title: item.title,
+            category: item.category,
+            image: item.image_url,
+            description: item.description || '',
+          })));
+        }
+        setLoading(false);
+      });
+  }, []);
 
   const checkScroll = () => {
     if (!scrollContainerRef.current) return;
@@ -50,8 +69,8 @@ export default function Galeri() {
   ];
 
   const filteredItems = activeCategory === 'all' 
-    ? GALLERY_ITEMS 
-    : GALLERY_ITEMS.filter(item => item.category === activeCategory);
+    ? galleryItems 
+    : galleryItems.filter(item => item.category === activeCategory);
 
   const handlePrev = () => {
     if (selectedImageIndex === null) return;
@@ -138,7 +157,13 @@ export default function Galeri() {
           </div>
         </div>
 
-        {/* Image Horizontal Track */}
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : galleryItems.length === 0 ? (
+          <div className="p-12 text-center text-slate-500 text-sm">Henüz galeri resmi eklenmemiş.</div>
+        ) : (
        <div ref={scrollContainerRef}
   className="flex gap-4 sm:gap-6 overflow-x-auto overflow-y-hidden scrollbar-none snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 scroll-smooth"
   style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
@@ -183,6 +208,7 @@ export default function Galeri() {
             );
           })}
         </div>
+      )}
       </div>
 
       {/* Lightbox Modal */}

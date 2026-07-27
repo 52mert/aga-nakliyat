@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { 
   X, Lock, ShieldCheck, FileText, MessageSquare, PhoneCall, 
   Trash2, Check, Plus, Settings, Send, LogOut, Save,
-  Calendar, Star, ArrowLeft, DollarSign
+  Calendar, Star, ArrowLeft, DollarSign, Image, Upload
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { supabase } from '../../lib/supabase';
@@ -21,7 +21,7 @@ export default function AdminPage() {
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<'requests' | 'reviews' | 'settings' | 'pricing'>('requests');
+  const [activeTab, setActiveTab] = useState<'requests' | 'reviews' | 'settings' | 'pricing' | 'gallery'>('requests');
 
   const [settingsForm, setSettingsForm] = useState(companyInfo);
   const [settingsSaved, setSettingsSaved] = useState(false);
@@ -33,6 +33,69 @@ export default function AdminPage() {
   useEffect(() => {
     setPricingForm(pricingConfig);
   }, [pricingConfig]);
+
+  const [galleryItems, setGalleryItems] = useState<any[]>([]);
+  const [galleryLoading, setGalleryLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadTitle, setUploadTitle] = useState('');
+  const [uploadCategory, setUploadCategory] = useState('tasima');
+  const [uploadDesc, setUploadDesc] = useState('');
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
+
+  const loadGallery = async () => {
+    setGalleryLoading(true);
+    const { data } = await supabase.from('gallery').select('*').order('sort_order');
+    if (data) setGalleryItems(data);
+    setGalleryLoading(false);
+  };
+
+  useEffect(() => { if (authenticated) loadGallery(); }, [authenticated]);
+
+  const handleUploadImage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!uploadFile || !uploadTitle) return;
+    setUploading(true);
+
+    const fileExt = uploadFile.name.split('.').pop();
+    const fileName = `${Date.now()}.${fileExt}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from('gallery-images')
+      .upload(fileName, uploadFile);
+
+    if (uploadError) {
+      alert('Yükleme hatası: ' + uploadError.message);
+      setUploading(false);
+      return;
+    }
+
+    const imageUrl = supabase.storage.from('gallery-images').getPublicUrl(fileName).data.publicUrl;
+
+    const { error: insertError } = await supabase.from('gallery').insert({
+      title: uploadTitle,
+      image_url: imageUrl,
+      category: uploadCategory,
+      description: uploadDesc,
+      sort_order: galleryItems.length + 1,
+    });
+
+    if (insertError) {
+      alert('Veritabanı hatası: ' + insertError.message);
+    } else {
+      setUploadTitle('');
+      setUploadDesc('');
+      setUploadFile(null);
+      loadGallery();
+    }
+    setUploading(false);
+  };
+
+  const handleDeleteGalleryItem = async (id: number, imageUrl: string) => {
+    const fileName = imageUrl.split('/').pop();
+    await supabase.storage.from('gallery-images').remove([fileName]);
+    await supabase.from('gallery').delete().eq('id', id);
+    loadGallery();
+  };
 
   const [newReview, setNewReview] = useState({
     name: '', location: 'Fatsa, Ordu', rating: 5,
@@ -170,6 +233,7 @@ export default function AdminPage() {
             { id: 'requests', label: 'Teklif Talepleri', count: quoteRequests.length, icon: FileText },
             { id: 'reviews', label: 'Müşteri Yorumları', count: testimonials.length, icon: MessageSquare },
             { id: 'pricing', label: 'Fiyatlandırma', icon: DollarSign },
+            { id: 'gallery', label: 'Galeri', count: galleryItems.length, icon: Image },
             { id: 'settings', label: 'Şirket Ayarları', icon: Settings },
           ].map((tab) => {
             const Icon = tab.icon;
@@ -413,7 +477,68 @@ export default function AdminPage() {
             </form>
           )}
 
-          {/* TAB 4: Settings */}
+          {/* TAB 4: Gallery */}
+          {activeTab === 'gallery' && (
+            <div className="space-y-4">
+              <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+                <h4 className="font-bold text-sm text-white flex items-center gap-2">
+                  <Plus className="w-4 h-4 text-red-400" />Yeni Resim Ekle
+                </h4>
+                <form onSubmit={handleUploadImage} className="space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input type="text" required placeholder="Başlık" value={uploadTitle}
+                      onChange={(e) => setUploadTitle(e.target.value)}
+                      className="px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs" />
+                    <select value={uploadCategory}
+                      onChange={(e) => setUploadCategory(e.target.value)}
+                      className="px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs">
+                      <option value="asansor">Asansörlü Taşıma</option>
+                      <option value="ambalaj">Ambalajlama & Paketleme</option>
+                      <option value="araclar">Araçlarımız</option>
+                      <option value="tasima">Ev Taşıma Kareleri</option>
+                    </select>
+                  </div>
+                  <input type="text" placeholder="Açıklama (opsiyonel)" value={uploadDesc}
+                    onChange={(e) => setUploadDesc(e.target.value)}
+                    className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs" />
+                  <input type="file" required accept="image/jpeg,image/png,image/webp"
+                    onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
+                    className="w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-red-600 file:text-white file:cursor-pointer" />
+                  <button type="submit" disabled={uploading || !uploadFile}
+                    className="px-5 py-2 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold cursor-pointer flex items-center gap-2">
+                    {uploading ? 'Yükleniyor...' : <><Upload className="w-3.5 h-3.5" /> Yükle</>}
+                  </button>
+                </form>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                {galleryLoading ? (
+                  <div className="col-span-full flex justify-center py-10">
+                    <div className="w-6 h-6 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
+                  </div>
+                ) : galleryItems.length === 0 ? (
+                  <div className="col-span-full p-8 text-center bg-slate-900 rounded-2xl border border-dashed border-slate-700 text-slate-500 text-sm">Henüz resim eklenmemiş.</div>
+                ) : (
+                  galleryItems.map((item) => (
+                    <div key={item.id} className="group relative rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 aspect-[4/3]">
+                      <img src={item.image_url} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <div className="absolute bottom-0 left-0 right-0 p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <p className="text-[10px] font-bold text-white truncate">{item.title}</p>
+                        <p className="text-[9px] text-slate-400 truncate">{item.category}</p>
+                      </div>
+                      <button onClick={() => handleDeleteGalleryItem(item.id, item.image_url)}
+                        className="absolute top-1.5 right-1.5 p-1.5 rounded-lg bg-red-600/80 text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:bg-red-700">
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 5: Settings */}
           {activeTab === 'settings' && (
             <form onSubmit={handleSaveSettings} className="space-y-4 max-w-2xl">
               {settingsSaved && (
