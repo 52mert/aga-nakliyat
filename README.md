@@ -33,6 +33,9 @@ Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı
 ├── .env
 ├── AGENTS.md
 ├── README.md
+├── responsive.md
+├── responsive3.md
+├── sontasarim.md
 │
 └── src/
     ├── main.tsx
@@ -53,21 +56,25 @@ Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı
     │   └── asansorPhoto.ts
     │
     └── components/
-        ├── Sidebar.tsx
-        ├── Hero.tsx
-        ├── Hero.css
-        ├── Hizmetler.tsx
-        ├── NedenBiz.tsx
-        ├── Galeri.tsx
-        ├── Yorumlar.tsx
-        ├── Iletisim.tsx
-        ├── Footer.tsx
-        ├── TeklifModal.tsx
-        ├── FloatingButtons.tsx
-        ├── WhatsAppIcon.tsx
-        ├── AdminModal.tsx
-        ├── AddReviewModal.tsx
-        └── AdminPage.tsx
+        ├── layout/
+        │   ├── Hero.tsx
+        │   ├── Sidebar.tsx
+        │   ├── Footer.tsx
+        │   └── FloatingButtons.tsx
+        ├── sections/
+        │   ├── Hizmetler.tsx
+        │   ├── NedenBiz.tsx
+        │   ├── Galeri.tsx
+        │   ├── Yorumlar.tsx
+        │   └── Iletisim.tsx
+        ├── modals/
+        │   ├── TeklifModal.tsx
+        │   ├── AddReviewModal.tsx
+        │   └── HizmetDetayModal.tsx
+        ├── ui/
+        │   └── WhatsAppIcon.tsx
+        └── admin/
+            └── AdminPage.tsx
 ```
 
 ---
@@ -89,7 +96,7 @@ Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı
   │       │   ├── <Iletisim>             # İletişim + teklif formu
   │       │   └── <Footer>               # Alt bilgi
   │       ├── <TeklifModal>              # Fiyat hesaplama (state: isCalculatorOpen)
-  │       ├── <AdminModal>               # Admin giriş tetikleyicisi (hero)
+  │       ├── <HizmetDetayModal>         # Hizmet kartı detay
   │       ├── <AddReviewModal>           # Yorum ekleme
   │       └── <FloatingButtons>          # Sabit WhatsApp + telefon
   │
@@ -111,7 +118,6 @@ Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı
   ├── testimonials          # testimonials (Supabase)
   ├── quoteRequests         # quote_requests (Supabase)
   ├── pricingConfig         # pricing_config (Supabase)
-  ├── isAdminOpen           # AdminModal görünürlük
   ├── isAddReviewOpen       # AddReviewModal görünürlük
   └── CRUD fonksiyonları    # Her tablo için update/delete/add
 ```
@@ -131,7 +137,6 @@ company_settings ──→ AppContext ──→ Footer, Iletisim, FloatingButton
 ```
 Sidebar ──→ "Teklif Al" butonu ──→ AppContext (setIsCalculatorOpen) ──→ TeklifModal
 Hero    ──→ "Yorum Yap" butonu ──→ AppContext (setIsAddReviewOpen) ──→ AddReviewModal
-Hero    ──→ Admin giriş (gizli) ──→ AppContext (setIsAdminOpen) ──→ AdminModal ──→ /mertadmin
 App.tsx ──→ useState(isCalculatorOpen) ──→ prop olarak TeklifModal'a geçer
 ```
 ---
@@ -293,6 +298,11 @@ vercel --prod
 - 4 sekme: Teklif Talepleri, Müşteri Yorumları, Fiyatlandırma, Şirket Ayarları
 - CRUD işlemleri Supabase üzerinden, auth ile korunur
 - Çıkış: `supabase.auth.signOut()`
+
+### HizmetDetayModal
+- Hizmet kartlarına tıklandığında açılan detay modalı
+- Hizmet açıklaması, görsel ve iletişim butonları içerir
+- Mobilde bottom sheet, masaüstünde ortalı pencere
 
 ### WhatsAppIcon
 - Gerçek WhatsApp SVG ikonu (lucide-react Send değil)
