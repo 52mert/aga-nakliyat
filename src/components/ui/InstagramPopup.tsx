@@ -82,7 +82,7 @@ export default function InstagramPopup() {
 
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center text-white text-lg shrink-0">
-              🚛
+              🚚
             </div>
             <div className="flex-1 min-w-0 pr-6">
               <h3 className={`font-extrabold text-sm md:text-base ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
