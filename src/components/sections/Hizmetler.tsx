@@ -175,13 +175,13 @@ export default function Hizmetler() {
                 )}
 
                 {/* SADECE BURASI DEĞİŞTİ: Resimlerin kesilmeden küçülüp tam sığması için object-contain ve arkaplan eklendi */}
-                <div className="relative h-52 overflow-hidden bg-slate-200/50 dark:bg-slate-800/50">
+                <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-800/50">
                   <img
                     src={service.image}
                     alt={service.title}
                     width={800}
                     height={600}
-                    className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                     referrerPolicy="no-referrer"
                   />

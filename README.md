@@ -103,12 +103,13 @@ Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı
   └── Route "/mertadmin"
       └── <AdminPage>                    # Auth korumalı admin paneli
           ├── Login (email + password)   # supabase.auth.signInWithPassword()
-          └── 5 Sekme:
+          └── 6 Sekme:
+              ├── Hizmetler              # services CRUD + Storage upload
+              ├── Şirket Ayarları        # company_settings CRUD
+              ├── Galeri Yönetimi        # gallery CRUD + Storage upload
               ├── Teklif Talepleri       # quote_requests CRUD
               ├── Müşteri Yorumları      # testimonials CRUD
-              ├── Fiyatlandırma          # pricing_config CRUD
-              ├── Galeri Yönetimi        # gallery CRUD + Storage upload
-              └── Şirket Ayarları        # company_settings CRUD
+              └── Fiyatlandırma          # pricing_config CRUD
 ```
 
 ### Context (Global State) Katmanı
@@ -197,6 +198,20 @@ App.tsx ──→ useState(isCalculatorOpen) ──→ prop olarak TeklifModal'a
 | created_at | timestamptz | |
 | updated_at | timestamptz | |
 
+#### `services`
+| Sütun | Tip | Açıklama |
+|---|---|---|
+| id | bigint (PK) | Otomatik |
+| title | text | Hizmet başlığı |
+| description | text | Açıklama |
+| icon_name | text | Lucide ikon adı (Home, Truck, Package...) |
+| image_url | text | Supabase Storage public URL |
+| features | jsonb | Özellik listesi |
+| popular | boolean | Öne çıkan hizmet |
+| sort_order | int | Sıralama |
+| created_at | timestamptz | |
+| updated_at | timestamptz | |
+
 #### `gallery`
 | Sütun | Tip | Açıklama |
 |---|---|---|
@@ -225,6 +240,7 @@ Tablolar `Row Level Security` ile korunur:
 | quote_requests | Herkese açık | Yalnızca authenticated (admin) |
 | company_settings | Herkese açık | Yalnızca authenticated (admin) |
 | pricing_config | Herkese açık | Yalnızca authenticated (admin) |
+| services | Herkese açık | Yalnızca authenticated (admin) |
 | gallery | Herkese açık | Yalnızca authenticated (admin) |
 
 ### Auth
@@ -317,9 +333,10 @@ vercel --prod
 
 ### AdminPage
 - Giriş: email + şifre (Supabase Auth)
-- 5 sekme: Teklif Talepleri, Müşteri Yorumları, Fiyatlandırma, Galeri Yönetimi, Şirket Ayarları
+- 6 sekme: Hizmetler, Şirket Ayarları, Galeri, Teklif Talepleri, Müşteri Yorumları, Fiyatlandırma
 - CRUD işlemleri Supabase üzerinden, auth ile korunur
 - Galeri Yönetimi: Resim yükleme (Storage → gallery tablosu), listeleme, silme
+- Hizmetler Yönetimi: Hizmet ekleme/düzenleme/silme, Storage yükleme, özellik listesi, sıralama
 - Çıkış: `supabase.auth.signOut()`
 
 ### HizmetDetayModal

@@ -14,7 +14,8 @@ Aga Nakliyat, Ordu / Fatsa merkezli evden eve asansörlü taşımacılık, ambal
 2. **Akıllı Fiyat Hesaplayıcı**: Supabase `pricing_config` tablosundan okur, oda/güzergah/kat/asansöre göre anında fiyat
 3. **Müşteri Yorumları**: Supabase `testimonials` tablosu, admin onaylı yayın, carousel gösterim
 4. **Saha Galerisi**: Supabase `gallery` tablosundan çekilen, admin panelden yönetilen (Storage yükleme), kategori filtreli, lightbox incelemeli dinamik galeri
-5. **Admin Paneli** (`/mertadmin`): Supabase Auth ile giriş, 5 sekme (teklifler, yorumlar, fiyatlandırma, galeri, ayarlar)
+5. **Admin Paneli** (`/mertadmin`): Supabase Auth ile giriş, 6 sekme (hizmetler, ayarlar, galeri, teklifler, yorumlar, fiyatlandırma)
+6. **Hizmetler Yönetimi**: `services` tablosu + Storage ile admin panelden hizmet ekleme/düzenleme/silme, `Hizmetler.tsx` Supabase'den çeker
 6. **Supabase Backend**: Postgres tabloları + RLS + Auth ile güvenli CRUD
 
 ---
@@ -105,7 +106,7 @@ public/
 - `VITE_ADMIN_PASSWORD` kullanılmaz, `.env`'den kaldırılabilir
 
 ### Supabase Tabloları (lowercase column names)
-- `testimonials`, `quote_requests`, `company_settings`, `pricing_config`, `gallery`
+- `testimonials`, `quote_requests`, `company_settings`, `pricing_config`, `gallery`, `services`
 - Tümü RLS ile korunur: SELECT public, diğer işlemler authenticated
 
 ### Supabase Storage
@@ -123,6 +124,13 @@ public/
 ### WhatsApp İkonları
 - Gerçek WhatsApp SVG (`ui/WhatsAppIcon.tsx`) kullanılır, lucide-react Send değil
 
+### Hizmetler Veri Akışı
+- `AdminPage.tsx` → form → `storage.upload("hizmetler/...")` + `services.insert()`
+- `AppContext.tsx` → `addService()`, `updateService()`, `deleteService()` → state + Supabase
+- `Hizmetler.tsx` → `supabase.from('services').select('*').order('sort_order')` → mapping → kartlar
+- Boş tablo durumunda `nakliyatData.ts`'teki `SERVICES` sabiti fallback olarak kullanılır
+- Görseller `object-cover aspect-[4/3]` ile responsive gösterilir
+
 ### Galeri Veri Akışı
 - `AdminPage.tsx` → file upload → `supabase.storage.from('gallery-images').upload()` → public URL al
 - `AdminPage.tsx` → `supabase.from('gallery').insert({title, image_url, category, ...})` → veritabanına kaydet
@@ -132,9 +140,11 @@ public/
 
 ---
 - **Galeri görselleri**: Supabase Storage (`gallery-images` bucket) üzerinden yayınlanır, `gallery` tablosundan çekilir
-- **Admin panel**: Galeri sekmesinden resim ekleme/silme yapılır (Storage + PostgreSQL)
-- **Hizmetler & Hero**: Kısmen `public/images/` klasöründen, kısmen Storage URL'lerinden beslenir
-- **`public/images/`**: Eski repodan kalan JPEG'ler, bazıları hizmet görseli olarak kullanılıyor
+- **Hizmetler görselleri**: Admin panel Hizmetler sekmesinden yüklenir, `hizmetler/` klasörüne kaydedilir
+- **Hizmetler kartları**: `object-cover aspect-[4/3]` ile responsive, her boyutta görsel düzgün sığar
+- **Admin panel**: Galeri + Hizmetler sekmelerinden resim ekleme/silme yapılır (Storage + PostgreSQL)
+- **Hero**: Kısmen `public/images/` klasöründen beslenir
+- **`public/images/`**: Eski repodan kalan JPEG'ler
 
 ### Pricing Config
 - `updatePricingConfig` (`AppContext.tsx`) artık `Promise<boolean>` döndürür

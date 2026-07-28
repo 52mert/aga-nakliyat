@@ -23,7 +23,7 @@ export default function AdminPage() {
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<'requests' | 'reviews' | 'settings' | 'pricing' | 'gallery' | 'services'>('requests');
+  const [activeTab, setActiveTab] = useState<'requests' | 'reviews' | 'settings' | 'pricing' | 'gallery' | 'services'>('services');
 
   const [settingsForm, setSettingsForm] = useState(companyInfo);
   const [settingsSaved, setSettingsSaved] = useState(false);
@@ -311,12 +311,12 @@ export default function AdminPage() {
         {/* Tabs */}
         <div className="flex items-center gap-2 mb-6 overflow-x-auto">
           {[
+            { id: 'services', label: 'Hizmetler', count: services.length, icon: Truck },
+            { id: 'settings', label: 'Şirket Ayarları', icon: Settings },
+            { id: 'gallery', label: 'Galeri', count: galleryItems.length, icon: Image },
             { id: 'requests', label: 'Teklif Talepleri', count: quoteRequests.length, icon: FileText },
             { id: 'reviews', label: 'Müşteri Yorumları', count: testimonials.length, icon: MessageSquare },
             { id: 'pricing', label: 'Fiyatlandırma', icon: DollarSign },
-            { id: 'gallery', label: 'Galeri', count: galleryItems.length, icon: Image },
-            { id: 'services', label: 'Hizmetler', count: services.length, icon: Truck },
-            { id: 'settings', label: 'Şirket Ayarları', icon: Settings },
           ].map((tab) => {
             const Icon = tab.icon;
             return (
