@@ -5,6 +5,7 @@ import Sidebar from './components/layout/Sidebar';
 import Hero from './components/layout/Hero';
 import Footer from './components/layout/Footer';
 import FloatingButtons from './components/layout/FloatingButtons';
+import InstagramPopup from './components/ui/InstagramPopup';
 import Hizmetler from './components/sections/Hizmetler';
 import NedenBiz from './components/sections/NedenBiz';
 import Galeri from './components/sections/Galeri';
@@ -37,6 +38,7 @@ function MainApp() {
       <TeklifModal isOpen={isCalculatorOpen} onClose={() => setIsCalculatorOpen(false)} />
       <AddReviewModal />
       <FloatingButtons />
+      <InstagramPopup />
     </div>
   );
 }
