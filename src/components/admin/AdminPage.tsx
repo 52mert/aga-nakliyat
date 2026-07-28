@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { 
   X, Lock, ShieldCheck, FileText, MessageSquare, PhoneCall, 
   Trash2, Check, Plus, Settings, Send, LogOut, Save,
-  Calendar, Star, ArrowLeft, DollarSign, Image, Upload
+  Calendar, Star, ArrowLeft, DollarSign, Image, Upload,
+  Home, Truck, Package, Building2, Box, Layers, Wrench, MapPin, CheckCircle
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { supabase } from '../../lib/supabase';
@@ -13,7 +14,8 @@ export default function AdminPage() {
   const { 
     quoteRequests, deleteQuoteRequest, testimonials, approveTestimonial,
     deleteTestimonial, addTestimonial, companyInfo, updateCompanyInfo,
-    pricingConfig, updatePricingConfig
+    pricingConfig, updatePricingConfig,
+    services, addService, updateService, deleteService
   } = useApp();
 
   const [authenticated, setAuthenticated] = useState(false);
@@ -21,7 +23,7 @@ export default function AdminPage() {
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<'requests' | 'reviews' | 'settings' | 'pricing' | 'gallery'>('requests');
+  const [activeTab, setActiveTab] = useState<'requests' | 'reviews' | 'settings' | 'pricing' | 'gallery' | 'services'>('requests');
 
   const [settingsForm, setSettingsForm] = useState(companyInfo);
   const [settingsSaved, setSettingsSaved] = useState(false);
@@ -95,6 +97,85 @@ export default function AdminPage() {
     await supabase.storage.from('gallery-images').remove([fileName]);
     await supabase.from('gallery').delete().eq('id', id);
     loadGallery();
+  };
+
+  const [serviceForm, setServiceForm] = useState({
+    title: '', description: '', iconName: 'Truck',
+    imageUrl: '', features: ['', '', '', ''], popular: false, sortOrder: 0,
+  });
+  const [serviceUploadFile, setServiceUploadFile] = useState<File | null>(null);
+  const [editingServiceId, setEditingServiceId] = useState<string | null>(null);
+  const [showServiceForm, setShowServiceForm] = useState(false);
+  const [serviceSaving, setServiceSaving] = useState(false);
+
+  const resetServiceForm = () => {
+    setServiceForm({ title: '', description: '', iconName: 'Truck', imageUrl: '', features: ['', '', '', ''], popular: false, sortOrder: services.length + 1 });
+    setServiceUploadFile(null);
+    setEditingServiceId(null);
+  };
+
+  const handleEditService = (s: any) => {
+    const feats = [...(s.features || []), '', '', '', ''].slice(0, 4);
+    setServiceForm({
+      title: s.title,
+      description: s.description,
+      iconName: s.iconName || 'Truck',
+      imageUrl: s.image || '',
+      features: feats,
+      popular: s.popular || false,
+      sortOrder: s.sort_order || 0,
+    });
+    setEditingServiceId(s.id);
+    setShowServiceForm(true);
+  };
+
+  const handleSaveService = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!serviceForm.title || !serviceForm.description) return;
+    setServiceSaving(true);
+
+    let imageUrl = serviceForm.imageUrl;
+
+    if (serviceUploadFile) {
+      const fileExt = serviceUploadFile.name.split('.').pop();
+      const fileName = `hizmetler/${Date.now()}.${fileExt}`;
+      await supabase.storage.from('gallery-images').upload(fileName, serviceUploadFile);
+      imageUrl = supabase.storage.from('gallery-images').getPublicUrl(fileName).data.publicUrl;
+    }
+
+    const features = serviceForm.features.filter((f) => f.trim() !== '');
+
+    if (editingServiceId) {
+      await updateService(editingServiceId, {
+        title: serviceForm.title,
+        description: serviceForm.description,
+        iconName: serviceForm.iconName,
+        image: imageUrl,
+        features,
+        popular: serviceForm.popular,
+        sort_order: serviceForm.sortOrder,
+      });
+    } else {
+      await addService({
+        title: serviceForm.title,
+        description: serviceForm.description,
+        iconName: serviceForm.iconName,
+        image: imageUrl,
+        features,
+        popular: serviceForm.popular,
+        sort_order: serviceForm.sortOrder,
+      });
+    }
+
+    setServiceSaving(false);
+    setShowServiceForm(false);
+    resetServiceForm();
+  };
+
+  const handleDeleteService = async (id: string) => {
+    if (window.confirm('Bu hizmeti silmek istediğinize emin misiniz?')) {
+      await deleteService(id);
+    }
   };
 
   const [newReview, setNewReview] = useState({
@@ -234,6 +315,7 @@ export default function AdminPage() {
             { id: 'reviews', label: 'Müşteri Yorumları', count: testimonials.length, icon: MessageSquare },
             { id: 'pricing', label: 'Fiyatlandırma', icon: DollarSign },
             { id: 'gallery', label: 'Galeri', count: galleryItems.length, icon: Image },
+            { id: 'services', label: 'Hizmetler', count: services.length, icon: Truck },
             { id: 'settings', label: 'Şirket Ayarları', icon: Settings },
           ].map((tab) => {
             const Icon = tab.icon;
@@ -538,7 +620,140 @@ export default function AdminPage() {
             </div>
           )}
 
-          {/* TAB 5: Settings */}
+          {/* TAB 6: Services */}
+          {activeTab === 'services' && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <p className="text-xs text-slate-400">{services.length} hizmet bulunuyor</p>
+                <button onClick={() => { resetServiceForm(); setShowServiceForm(!showServiceForm); }}
+                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md transition-colors cursor-pointer">
+                  {showServiceForm ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                  {showServiceForm ? 'Kapat' : 'Hizmet Ekle'}
+                </button>
+              </div>
+
+              {showServiceForm && (
+                <form onSubmit={handleSaveService} className="p-5 rounded-2xl bg-slate-900 border border-red-500/30 space-y-4">
+                  <h5 className="font-bold text-sm text-white">{editingServiceId ? 'Hizmet Düzenle' : 'Yeni Hizmet Ekle'}</h5>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-400 mb-1">Başlık</label>
+                      <input type="text" required value={serviceForm.title}
+                        onChange={(e) => setServiceForm({ ...serviceForm, title: e.target.value })}
+                        className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs" />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-400 mb-1">İkon</label>
+                      <select value={serviceForm.iconName}
+                        onChange={(e) => setServiceForm({ ...serviceForm, iconName: e.target.value })}
+                        className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs">
+                        <option value="Home">Home</option>
+                        <option value="Truck">Truck</option>
+                        <option value="Package">Package</option>
+                        <option value="Building2">Building2</option>
+                        <option value="Box">Box</option>
+                        <option value="Layers">Layers</option>
+                        <option value="Wrench">Wrench</option>
+                        <option value="MapPin">MapPin</option>
+                        <option value="Shield">Shield</option>
+                        <option value="CheckCircle">CheckCircle</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-400 mb-1">Açıklama</label>
+                    <textarea required rows={2} value={serviceForm.description}
+                      onChange={(e) => setServiceForm({ ...serviceForm, description: e.target.value })}
+                      className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs" />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-400 mb-1">Görsel</label>
+                      <input type="file" accept="image/jpeg,image/png,image/webp"
+                        onChange={(e) => setServiceUploadFile(e.target.files?.[0] || null)}
+                        className="w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-red-600 file:text-white file:cursor-pointer" />
+                      {serviceForm.imageUrl && !serviceUploadFile && (
+                        <p className="text-[10px] text-slate-500 mt-1 truncate">Mevcut: {serviceForm.imageUrl.split('/').pop()}</p>
+                      )}
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-slate-400 mb-1">Sıralama</label>
+                      <input type="number" value={serviceForm.sortOrder}
+                        onChange={(e) => setServiceForm({ ...serviceForm, sortOrder: Number(e.target.value) })}
+                        className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-400 mb-1">Özellikler</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {[0, 1, 2, 3].map((i) => (
+                        <input key={i} type="text" placeholder={`Özellik ${i + 1}`} value={serviceForm.features[i] || ''}
+                          onChange={(e) => {
+                            const feats = [...serviceForm.features];
+                            feats[i] = e.target.value;
+                            setServiceForm({ ...serviceForm, features: feats });
+                          }}
+                          className="px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-xs" />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <input type="checkbox" id="servicePopular" checked={serviceForm.popular}
+                      onChange={(e) => setServiceForm({ ...serviceForm, popular: e.target.checked })}
+                      className="w-4 h-4 rounded bg-slate-950 border-slate-700 text-red-600" />
+                    <label htmlFor="servicePopular" className="text-xs text-slate-300 font-bold">Öne Çıkan Hizmet</label>
+                  </div>
+
+                  <button type="submit" disabled={serviceSaving}
+                    className="px-5 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold cursor-pointer disabled:opacity-50">
+                    {serviceSaving ? 'Kaydediliyor...' : <><Save className="w-3.5 h-3.5 inline mr-1" />Kaydet</>}
+                  </button>
+                </form>
+              )}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {services.map((s) => (
+                  <div key={s.id} className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex gap-4">
+                    <div className="w-14 h-14 rounded-2xl bg-slate-950 border border-slate-700 flex items-center justify-center text-red-500 shrink-0">
+                      {s.iconName === 'Home' ? <Home className="w-6 h-6" /> :
+                       s.iconName === 'Truck' ? <Truck className="w-6 h-6" /> :
+                       s.iconName === 'Package' ? <Package className="w-6 h-6" /> :
+                       s.iconName === 'Building2' ? <Building2 className="w-6 h-6" /> :
+                       s.iconName === 'Box' ? <Box className="w-6 h-6" /> :
+                       s.iconName === 'Layers' ? <Layers className="w-6 h-6" /> :
+                       s.iconName === 'Wrench' ? <Wrench className="w-6 h-6" /> :
+                       s.iconName === 'MapPin' ? <MapPin className="w-6 h-6" /> :
+                       <CheckCircle className="w-6 h-6" />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-bold text-sm text-white truncate">{s.title}</h4>
+                        {s.popular && <span className="text-[9px] bg-red-600 text-white px-2 py-0.5 rounded-full font-bold">Popüler</span>}
+                      </div>
+                      <p className="text-xs text-slate-400 mt-1 line-clamp-2">{s.description}</p>
+                      <div className="flex items-center gap-2 mt-2">
+                        <button onClick={() => handleEditService(s)}
+                          className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-[10px] font-bold transition-colors cursor-pointer">
+                          Düzenle
+                        </button>
+                        <button onClick={() => handleDeleteService(s.id)}
+                          className="px-3 py-1.5 bg-red-950 hover:bg-red-900 text-red-400 rounded-xl text-[10px] font-bold transition-colors cursor-pointer">
+                          <Trash2 className="w-3 h-3" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 7: Settings */}
           {activeTab === 'settings' && (
             <form onSubmit={handleSaveSettings} className="space-y-4 max-w-2xl">
               {settingsSaved && (

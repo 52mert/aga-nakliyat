@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { Testimonial, QuoteFormData, CompanySettings, PricingConfig } from '../types';
+import { Service, Testimonial, QuoteFormData, CompanySettings, PricingConfig } from '../types';
 import { supabase } from '../lib/supabase';
 
 export type ThemeMode = 'dark' | 'light';
@@ -20,6 +20,11 @@ interface AppContextType {
   setIsAddReviewOpen: (open: boolean) => void;
   pricingConfig: PricingConfig;
   updatePricingConfig: (config: PricingConfig) => Promise<boolean>;
+  services: Service[];
+  fetchServices: () => void;
+  addService: (service: Omit<Service, 'id'>) => void;
+  updateService: (id: string, data: Partial<Service>) => void;
+  deleteService: (id: string) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -233,6 +238,70 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setQuoteRequests((prev) => prev.filter((q) => q.id !== id));
   };
 
+  const [services, setServices] = useState<Service[]>([]);
+
+  const fetchServices = useCallback(async () => {
+    const { data, error } = await supabase.from('services').select('*').order('sort_order');
+    if (!error && data) {
+      setServices(data.map((s: any) => ({
+        id: String(s.id),
+        title: s.title,
+        description: s.description,
+        iconName: s.icon_name,
+        image: s.image_url,
+        features: s.features || [],
+        popular: s.popular || false,
+        sort_order: s.sort_order || 0,
+      })));
+    }
+  }, []);
+
+  useEffect(() => { fetchServices(); }, [fetchServices]);
+
+  const addService = async (service: Omit<Service, 'id'>) => {
+    const { data } = await supabase.from('services').insert({
+      title: service.title,
+      description: service.description,
+      icon_name: service.iconName,
+      image_url: service.image,
+      features: service.features,
+      popular: service.popular || false,
+      sort_order: service.sort_order || 0,
+    }).select().single();
+
+    if (data) {
+      setServices((prev) => [...prev, {
+        id: String(data.id),
+        title: data.title,
+        description: data.description,
+        iconName: data.icon_name,
+        image: data.image_url,
+        features: data.features || [],
+        popular: data.popular || false,
+        sort_order: data.sort_order || 0,
+      }]);
+    }
+  };
+
+  const updateService = async (id: string, data: Partial<Service>) => {
+    const updates: any = {};
+    if (data.title !== undefined) updates.title = data.title;
+    if (data.description !== undefined) updates.description = data.description;
+    if (data.iconName !== undefined) updates.icon_name = data.iconName;
+    if (data.image !== undefined) updates.image_url = data.image;
+    if (data.features !== undefined) updates.features = data.features;
+    if (data.popular !== undefined) updates.popular = data.popular;
+    if (data.sort_order !== undefined) updates.sort_order = data.sort_order;
+
+    await supabase.from('services').update(updates).eq('id', Number(id));
+    setServices((prev) => prev.map((s) => s.id === id ? { ...s, ...data } : s));
+  };
+
+  const deleteService = async (id: string) => {
+    await supabase.from('services').delete().eq('id', Number(id));
+    setServices((prev) => prev.filter((s) => s.id !== id));
+  };
+
   const [isAddReviewOpen, setIsAddReviewOpen] = useState(false);
 
   return (
@@ -243,6 +312,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       quoteRequests, addQuoteRequest, deleteQuoteRequest,
       isAddReviewOpen, setIsAddReviewOpen,
       pricingConfig, updatePricingConfig,
+      services, fetchServices, addService, updateService, deleteService,
     }}>
       {children}
     </AppContext.Provider>

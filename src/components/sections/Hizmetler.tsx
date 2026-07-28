@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, type ElementType } from 'react';
 import { motion } from 'motion/react';
+import { supabase } from '../../lib/supabase';
 import { SERVICES } from '../../data/nakliyatData';
 import { Service } from '../../types';
 import { 
@@ -9,6 +10,9 @@ import {
   Package, 
   Building2, 
   Box, 
+  Shield,
+  Wrench,
+  MapPin,
   CheckCircle2, 
   ArrowRight, 
   ChevronLeft,
@@ -22,14 +26,41 @@ const iconMap: Record<string, ElementType> = {
   Truck,
   Package,
   Building2,
-  Box
+  Box,
+  Shield,
+  Wrench,
+  MapPin,
+  CheckCircle2,
 };
 
 export default function Hizmetler() {
+  const [serviceList, setServiceList] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+
+  useEffect(() => {
+    supabase.from('services').select('*').order('sort_order')
+      .then(({ data }) => {
+        if (data && data.length > 0) {
+          setServiceList(data.map((s: any) => ({
+            id: String(s.id),
+            title: s.title,
+            description: s.description,
+            iconName: s.icon_name,
+            image: s.image_url,
+            features: s.features || [],
+            popular: s.popular || false,
+            sort_order: s.sort_order || 0,
+          })));
+        } else {
+          setServiceList(SERVICES);
+        }
+        setLoading(false);
+      });
+  }, []);
 
   const checkScroll = () => {
     if (!scrollContainerRef.current) return;
@@ -119,7 +150,13 @@ export default function Hizmetler() {
         {/* Service Cards Horizontal Track */}
        <div ref={scrollContainerRef}
   className="flex gap-4 sm:gap-6 overflow-x-auto overflow-y-hidden scrollbar-none snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 scroll-smooth"
-  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>  {SERVICES.map((service, index) => {
+  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>  {loading ? (
+    <div className="flex items-center justify-center w-full py-20">
+      <div className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
+    </div>
+  ) : serviceList.length === 0 ? (
+    <div className="w-full py-12 text-center text-slate-500 text-sm">Henüz hizmet eklenmemiş.</div>
+  ) : serviceList.map((service, index) => {
             const IconComponent = iconMap[service.iconName] || Truck;
 
             return (

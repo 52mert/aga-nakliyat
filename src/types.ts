@@ -6,6 +6,7 @@ export interface Service {
   image: string;
   features: string[];
   popular?: boolean;
+  sort_order?: number;
 }
 
 export interface GalleryItem {
