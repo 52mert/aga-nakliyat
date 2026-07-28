@@ -103,10 +103,11 @@ Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı
   └── Route "/mertadmin"
       └── <AdminPage>                    # Auth korumalı admin paneli
           ├── Login (email + password)   # supabase.auth.signInWithPassword()
-          └── 4 Sekme:
+          └── 5 Sekme:
               ├── Teklif Talepleri       # quote_requests CRUD
               ├── Müşteri Yorumları      # testimonials CRUD
               ├── Fiyatlandırma          # pricing_config CRUD
+              ├── Galeri Yönetimi        # gallery CRUD + Storage upload
               └── Şirket Ayarları        # company_settings CRUD
 ```
 
@@ -131,6 +132,8 @@ pricing_config ──→ AppContext ──→ TeklifModal (fiyat hesaplama)
 testimonials    ──→ AppContext ──→ Yorumlar (carousel gösterim)
 quote_requests  ──→ AppContext ──→ AdminPage (teklif listesi)
 company_settings ──→ AppContext ──→ Footer, Iletisim, FloatingButtons (iletişim bilgileri)
+gallery          ──→ Galeri.tsx (useEffect ile Supabase'den direkt çekim)
+gallery-images (Storage) ──→ Galeri.tsx → <img> src (public URL)
 ```
 
 ### Bileşen-Bileşen İlişkisi
@@ -194,6 +197,24 @@ App.tsx ──→ useState(isCalculatorOpen) ──→ prop olarak TeklifModal'a
 | created_at | timestamptz | |
 | updated_at | timestamptz | |
 
+#### `gallery`
+| Sütun | Tip | Açıklama |
+|---|---|---|
+| id | bigint (PK) | Otomatik |
+| title | text | Resim başlığı |
+| image_url | text | Supabase Storage public URL |
+| category | text | asansor / ambalaj / araclar / tasima |
+| description | text | Açıklama |
+| sort_order | int | Sıralama |
+| created_at | timestamptz | Oluşturulma |
+
+### Supabase Storage
+
+- **Bucket**: `gallery-images` (public)
+- **MIME**: yalnızca `image/jpeg`, `image/png`, `image/webp`
+- **Dosya limiti**: 5 MB
+- **RLS**: SELECT public, INSERT/UPDATE/DELETE authenticated
+
 ### RLS Politikaları
 
 Tablolar `Row Level Security` ile korunur:
@@ -204,6 +225,7 @@ Tablolar `Row Level Security` ile korunur:
 | quote_requests | Herkese açık | Yalnızca authenticated (admin) |
 | company_settings | Herkese açık | Yalnızca authenticated (admin) |
 | pricing_config | Herkese açık | Yalnızca authenticated (admin) |
+| gallery | Herkese açık | Yalnızca authenticated (admin) |
 
 ### Auth
 
@@ -295,8 +317,9 @@ vercel --prod
 
 ### AdminPage
 - Giriş: email + şifre (Supabase Auth)
-- 4 sekme: Teklif Talepleri, Müşteri Yorumları, Fiyatlandırma, Şirket Ayarları
+- 5 sekme: Teklif Talepleri, Müşteri Yorumları, Fiyatlandırma, Galeri Yönetimi, Şirket Ayarları
 - CRUD işlemleri Supabase üzerinden, auth ile korunur
+- Galeri Yönetimi: Resim yükleme (Storage → gallery tablosu), listeleme, silme
 - Çıkış: `supabase.auth.signOut()`
 
 ### HizmetDetayModal

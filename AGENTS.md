@@ -13,8 +13,8 @@ Aga Nakliyat, Ordu / Fatsa merkezli evden eve asansörlü taşımacılık, ambal
 1. **Hero & Scroll Parallax**: Framer Motion `useTransform` ile optimize edilmiş (4 transform) smooth scroll
 2. **Akıllı Fiyat Hesaplayıcı**: Supabase `pricing_config` tablosundan okur, oda/güzergah/kat/asansöre göre anında fiyat
 3. **Müşteri Yorumları**: Supabase `testimonials` tablosu, admin onaylı yayın, carousel gösterim
-4. **Saha Galerisi**: Kategori filtreli, lightbox incelemeli dinamik galeri
-5. **Admin Paneli** (`/mertadmin`): Supabase Auth ile giriş, 4 sekme (teklifler, yorumlar, fiyatlandırma, ayarlar)
+4. **Saha Galerisi**: Supabase `gallery` tablosundan çekilen, admin panelden yönetilen (Storage yükleme), kategori filtreli, lightbox incelemeli dinamik galeri
+5. **Admin Paneli** (`/mertadmin`): Supabase Auth ile giriş, 5 sekme (teklifler, yorumlar, fiyatlandırma, galeri, ayarlar)
 6. **Supabase Backend**: Postgres tabloları + RLS + Auth ile güvenli CRUD
 
 ---
@@ -105,8 +105,15 @@ public/
 - `VITE_ADMIN_PASSWORD` kullanılmaz, `.env`'den kaldırılabilir
 
 ### Supabase Tabloları (lowercase column names)
-- `testimonials`, `quote_requests`, `company_settings`, `pricing_config`
+- `testimonials`, `quote_requests`, `company_settings`, `pricing_config`, `gallery`
 - Tümü RLS ile korunur: SELECT public, diğer işlemler authenticated
+
+### Supabase Storage
+- **Bucket**: `gallery-images` (public)
+- **MIME**: yalnızca `image/jpeg`, `image/png`, `image/webp`
+- **Dosya limiti**: 5 MB
+- **RLS**: SELECT public, INSERT/UPDATE/DELETE authenticated (bucket seviyesinde MIME kontrolü)
+- **Kullanım**: Admin panel Galeri sekmesi → file upload → Storage → `gallery` tablosu → `Galeri.tsx`
 
 ### Teklif Hesaplayıcı
 - `TeklifModal.tsx` fiyatları `pricingConfig` context'inden alır
@@ -116,14 +123,18 @@ public/
 ### WhatsApp İkonları
 - Gerçek WhatsApp SVG (`ui/WhatsAppIcon.tsx`) kullanılır, lucide-react Send değil
 
----
+### Galeri Veri Akışı
+- `AdminPage.tsx` → file upload → `supabase.storage.from('gallery-images').upload()` → public URL al
+- `AdminPage.tsx` → `supabase.from('gallery').insert({title, image_url, category, ...})` → veritabanına kaydet
+- `Galeri.tsx` → `supabase.from('gallery').select('*').order('sort_order')` → `useEffect` ile çek
+- Mapping: `image_url` → `image` (GalleryItem tipine uygun)
+- Silme: Storage'dan dosya sil + `gallery` tablosundan satır sil
 
-### Görseller
-- **Hero arkaplanı**: Unsplash remote URL (`backgroundImage` inline style)
-- **Hizmetler & Galeri**: Çoğu Unsplash URL + asansör SVG data URI
-- **`public/images/`**: Eski `52mert/aganakliyat` reposundan alınan 14 adet gerçek firma fotoğrafı (JPEG)
-- **Kullanılmayan görseller**: Eski repodaki `.jpeg` dosyaları projede aktif kullanılmıyor; `public/images/`'e kopyalandı, `nakliyatData.ts`'deki URL'ler güncellenmeyi bekliyor
-- **Gelecek planı**: Görseller Supabase Storage'a taşınıp admin panelinden yönetilecek
+---
+- **Galeri görselleri**: Supabase Storage (`gallery-images` bucket) üzerinden yayınlanır, `gallery` tablosundan çekilir
+- **Admin panel**: Galeri sekmesinden resim ekleme/silme yapılır (Storage + PostgreSQL)
+- **Hizmetler & Hero**: Kısmen `public/images/` klasöründen, kısmen Storage URL'lerinden beslenir
+- **`public/images/`**: Eski repodan kalan JPEG'ler, bazıları hizmet görseli olarak kullanılıyor
 
 ### Pricing Config
 - `updatePricingConfig` (`AppContext.tsx`) artık `Promise<boolean>` döndürür
