@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- ANA SAYFA -->
+  <url>
+    <loc>https://www.orduaganakliyat.com.tr/</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://oluxuyjancmjsgjkcfjx.supabase.co/storage/v1/object/public/gallery-images/aganakliyat2.jpeg</image:loc>
+    </image:image>
+  </url>
+
+  <!-- BÖLGE SAYFALARI -->
+  <url>
+    <loc>https://www.orduaganakliyat.com.tr/bolge/fatsa</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://oluxuyjancmjsgjkcfjx.supabase.co/storage/v1/object/public/gallery-images/asansor2.jpeg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://oluxuyjancmjsgjkcfjx.supabase.co/storage/v1/object/public/gallery-images/foto.jpeg</image:loc>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.orduaganakliyat.com.tr/bolge/unye</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://oluxuyjancmjsgjkcfjx.supabase.co/storage/v1/object/public/gallery-images/kamyon.jpeg</image:loc>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.orduaganakliyat.com.tr/bolge/ordu</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://oluxuyjancmjsgjkcfjx.supabase.co/storage/v1/object/public/gallery-images/paketleme2.jpeg</image:loc>
+    </image:image>
+  </url>
+
+  <!-- HİZMET SAYFALARI -->
+  <url>
+    <loc>https://www.orduaganakliyat.com.tr/hizmet/evden-eve</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://oluxuyjancmjsgjkcfjx.supabase.co/storage/v1/object/public/gallery-images/foto.jpeg</image:loc>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.orduaganakliyat.com.tr/hizmet/asansorlu-nakliyat</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://oluxuyjancmjsgjkcfjx.supabase.co/storage/v1/object/public/gallery-images/asansor2.jpeg</image:loc>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.orduaganakliyat.com.tr/hizmet/sehirlerarasi</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://oluxuyjancmjsgjkcfjx.supabase.co/storage/v1/object/public/gallery-images/kamyon.jpeg</image:loc>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.orduaganakliyat.com.tr/hizmet/ambalajlama</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://oluxuyjancmjsgjkcfjx.supabase.co/storage/v1/object/public/gallery-images/paketleme2.jpeg</image:loc>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.orduaganakliyat.com.tr/hizmet/ofis-tasima</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://oluxuyjancmjsgjkcfjx.supabase.co/storage/v1/object/public/gallery-images/aganakliyat2.jpeg</image:loc>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://www.orduaganakliyat.com.tr/hizmet/parca-esya-tasima</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://oluxuyjancmjsgjkcfjx.supabase.co/storage/v1/object/public/gallery-images/paketleme3.jpeg</image:loc>
+    </image:image>
+  </url>
+</urlset>
