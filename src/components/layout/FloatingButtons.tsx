@@ -44,17 +44,15 @@ export default function FloatingButtons() {
           className="flex-1 py-3 bg-red-600 active:bg-red-700 active:scale-98 text-white rounded-xl font-black text-xs text-center flex items-center justify-center gap-2 shadow-lg shadow-red-950/50 transition-all min-h-[44px]"
         >
           <PhoneCall className="w-4 h-4 shrink-0" />
-          <span className="whitespace-nowrap">Hemen Ara</span>
+          <span className="whitespace-nowrap">{companyInfo.phonePrimary}</span>
         </a>
 
         <a
-          href={`https://wa.me/${companyInfo.whatsappNumber}?text=${encodeURIComponent('Merhaba Aga Nakliyat, evden eve nakliye teklifi almak istiyorum.')}`}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={`tel:+${companyInfo.whatsappNumber}`}
           className="flex-1 py-3 bg-emerald-600 active:bg-emerald-700 active:scale-98 text-white rounded-xl font-black text-xs text-center flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/40 transition-all min-h-[44px]"
         >
-          <WhatsAppIcon className="w-4 h-4 shrink-0" />
-          <span className="whitespace-nowrap">WhatsApp Hat</span>
+          <PhoneCall className="w-4 h-4 shrink-0" />
+          <span className="whitespace-nowrap">0535 599 15 72</span>
         </a>
       </div>
     </>
