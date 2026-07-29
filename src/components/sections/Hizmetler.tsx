@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, type ElementType } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { supabase } from '../../lib/supabase';
 import { SERVICES } from '../../data/nakliyatData';
@@ -19,6 +20,15 @@ import {
   ChevronRight
 } from 'lucide-react';
 import HizmetDetayModal from '../modals/HizmetDetayModal';
+
+const serviceRouteMap: Record<string, string> = {
+  'evden-eve': 'evden-eve',
+  'asansorlu-tasima': 'asansorlu-nakliyat',
+  'sehirlerarasi': 'sehirlerarasi',
+  'ambalajlama': 'ambalajlama',
+  'ofis-tasima': 'ofis-tasima',
+  'parca-esyasi': 'parca-esya-tasima',
+};
 
 const iconMap: Record<string, ElementType> = {
   Home,
@@ -213,13 +223,13 @@ export default function Hizmetler() {
                   </div>
 
                   <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/60 flex items-center justify-between">
-                    <button
-                      onClick={() => setSelectedService(service)}
-                      className="hidden sm:flex w-full py-2 px-4 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-red-600 hover:text-white text-xs font-bold text-slate-800 dark:text-slate-200 items-center justify-center gap-2 transition-all cursor-pointer"
+                    <Link
+                      to={`/hizmet/${serviceRouteMap[service.id] || service.id}`}
+                      className="hidden sm:flex w-full py-2 px-4 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-red-600 hover:text-white text-xs font-bold text-slate-800 dark:text-slate-200 items-center justify-center gap-2 transition-all"
                     >
                       <span>Hizmet Detaylarını İncele</span>
                       <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </motion.div>

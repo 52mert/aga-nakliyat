@@ -1,6 +1,6 @@
+import { Link } from 'react-router-dom';
 import { MapPin, PhoneCall, Mail, ShieldCheck, Heart } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
-import { COMPANY_INFO } from '../../data/nakliyatData';
 
 export default function Footer() {
   const { companyInfo } = useApp();
@@ -37,28 +37,30 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Col 2: Services */}
+          {/* Col 2: Hizmetler */}
           <div>
             <h4 className="font-bold text-white text-base mb-4">Hizmetlerimiz</h4>
             <ul className="space-y-2.5 text-xs">
-              <li><a href="#hizmetler" className="hover:text-red-400 transition-colors">Evden Eve Nakliyat</a></li>
-              <li><a href="#hizmetler" className="hover:text-red-400 transition-colors">25. Kat Mobil Asansörlü Taşıma</a></li>
-              <li><a href="#hizmetler" className="hover:text-red-400 transition-colors">Şehirlerarası Nakliye</a></li>
-              <li><a href="#hizmetler" className="hover:text-red-400 transition-colors">Çift Kat Balonlu Ambalajlama</a></li>
-              <li><a href="#hizmetler" className="hover:text-red-400 transition-colors">Ofis & Büro Taşımacılığı</a></li>
-              <li><a href="#hizmetler" className="hover:text-red-400 transition-colors">Parça Eşya Taşıma</a></li>
+              <li><Link to="/hizmet/evden-eve" className="hover:text-red-400 transition-colors">Evden Eve Nakliyat</Link></li>
+              <li><Link to="/hizmet/asansorlu-nakliyat" className="hover:text-red-400 transition-colors">Mobil Asansörlü Taşıma</Link></li>
+              <li><Link to="/hizmet/sehirlerarasi" className="hover:text-red-400 transition-colors">Şehirlerarası Nakliye</Link></li>
+              <li><Link to="/hizmet/ambalajlama" className="hover:text-red-400 transition-colors">Profesyonel Ambalajlama</Link></li>
+              <li><Link to="/hizmet/ofis-tasima" className="hover:text-red-400 transition-colors">Ofis & Büro Taşımacılığı</Link></li>
+              <li><Link to="/hizmet/parca-esya-tasima" className="hover:text-red-400 transition-colors">Parça Eşya Taşıma</Link></li>
             </ul>
           </div>
 
-          {/* Col 3: Hizmet Bölgeleri */}
+          {/* Col 3: Bölgeler */}
           <div>
             <h4 className="font-bold text-white text-base mb-4">Hizmet Bölgelerimiz</h4>
-            <div className="flex flex-wrap gap-1.5 text-xs">
-              {COMPANY_INFO.regions.map((region, idx) => (
-                <span
-                  key={idx}
-                  className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-slate-300 font-medium"
-                >
+            <ul className="space-y-2.5 text-xs">
+              <li><Link to="/bolge/fatsa" className="hover:text-red-400 transition-colors">Fatsa Nakliyat</Link></li>
+              <li><Link to="/bolge/unye" className="hover:text-red-400 transition-colors">Ünye Nakliyat</Link></li>
+              <li><Link to="/bolge/ordu" className="hover:text-red-400 transition-colors">Ordu Nakliyat</Link></li>
+            </ul>
+            <div className="flex flex-wrap gap-1.5 text-xs mt-4">
+              {['Perşembe', 'Kumru', 'Korgan', 'Çamaş', 'Gölköy', 'Aybastı'].map((region, idx) => (
+                <span key={idx} className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-slate-300 font-medium">
                   {region}
                 </span>
               ))}
