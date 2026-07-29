@@ -76,23 +76,6 @@ export default function MainApp() {
         </Helmet>
       )}
 
-      {seoData && (
-        <div className={`pt-16 px-4 text-center border-b ${
-          pathPrefix === 'hizmet'
-            ? 'bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-900/30'
-            : 'bg-slate-50 dark:bg-slate-900/50 border-slate-200 dark:border-slate-800'
-        }`}>
-          <div className="max-w-4xl mx-auto py-6">
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-              {seoData.h1Text}
-            </h1>
-            <p className="mt-2 text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-              {seoData.subText}
-            </p>
-          </div>
-        </div>
-      )}
-
       <div className={`min-h-screen transition-colors duration-300 ${
         theme === 'dark'
           ? 'bg-slate-950 text-slate-100 selection:bg-red-600 selection:text-white'

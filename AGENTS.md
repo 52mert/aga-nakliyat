@@ -136,12 +136,17 @@ src/
 
 ### WhatsApp İkonları
 - Gerçek WhatsApp SVG (`ui/WhatsAppIcon.tsx`) kullanılır, lucide-react Send değil
+- Hero, Hizmetler, Sidebar, TeklifModal'de kullanılır (mobil alt barda kullanılmaz)
+
+### Mobil Alt Bar (FloatingButtons)
+- **Sol**: `PhoneCall` ikonu + `{companyInfo.phonePrimary}` → `tel:` arama
+- **Sağ**: `PhoneCall` ikonu + `0535 599 15 72` → `tel:` arama
+- Her iki buton da telefon araması yapar, WhatsApp ikonu kullanılmaz
 
 ### SEO Rotaları (Dinamik Routing)
 - `src/config/seoRoutes.ts` → 3 bölge (fatsa, unye, ordu) + 6 hizmet (evden-eve, asansorlu-nakliyat, ...) SEO veri sözlüğü
 - `src/components/layout/MainApp.tsx` → `useParams()` ile slug okur, Helmet ile title/meta/OG/JSON-LD basar
 - `App.tsx` → HelmetProvider sarmalar, 2 yeni route ekler (`/hizmet/:slug`, `/bolge/:slug`)
-- SEO banner: Hero üstünde dinamik H1 + SEO metni (hizmet=kırmızı arkaplan, bölge=slate arkaplan)
 - JSON-LD: LocalBusiness (bölge) veya Service (hizmet) şeması, areaServed dinamik
 - 404 redirect: Geçersiz slug → `/` ana sayfaya yönlendir
 - Scroll: `document.getElementById().scrollIntoView({ behavior: 'smooth' })`

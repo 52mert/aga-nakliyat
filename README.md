@@ -34,9 +34,7 @@ Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı
 ├── .env
 ├── AGENTS.md
 ├── README.md
-├── responsive.md
 ├── responsive3.md
-├── sontasarim.md
 │
 └── src/
     ├── main.tsx
@@ -93,7 +91,6 @@ Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı
   ├── Route "/"
   │   └── <MainApp>
   │       ├── Helmet (dinamik title, description, OG, JSON-LD)
-  │       ├── [seoBanner] (varsa)        # H1 + SEO metni (slug'a göre)
   │       ├── <Sidebar>                  # Navigasyon + mobil drawer
   │       ├── <main>
   │       │   ├── <Hero>                 # Scroll parallax + puan rozeti
@@ -109,9 +106,9 @@ Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı
   │       └── <InstagramPopup>           # 3sn sonra göster, 10sn açık kal
   │
   ├── Route "/hizmet/:slug" (SEO)
-  │   └── <MainApp> + SEO banner
+  │   └── <MainApp> (Helmet ile title/meta/JSON-LD güncellenir)
   ├── Route "/bolge/:slug" (SEO)
-  │   └── <MainApp> + SEO banner
+  │   └── <MainApp> (Helmet ile title/meta/JSON-LD güncellenir)
   └── Route "/mertadmin"
       └── <AdminPage>                    # Auth korumalı admin paneli
           ├── Login (email + password)   # supabase.auth.signInWithPassword()
@@ -303,7 +300,7 @@ Admin paneline yalnızca URL'den `/mertadmin` yazarak erişilir.
 ### SEO Bileşenleri
 
 - **Metrik**: `react-helmet-async` ile <Helmet> (title, meta, OG, canonical, JSON-LD)
-- **Banner**: Hero üstünde dinamik H1 + SEO metni (hizmette kırmızı, bölgede slate arkaplan)
+- **Görsel değişiklik**: Sayfa tasarımı aynen kalır, ekstra banner/HTML eklenmez
 - **Redirect**: Geçersiz slug → ana sayfaya yönlendir
 - **Scroll**: Sayfa yüklenince ilgili section'a smooth scroll
 - **JSON-LD**: LocalBusiness (bölge) / Service (hizmet) şeması
@@ -370,6 +367,13 @@ vercel --prod
 ---
 
 ## Bileşen Detayları
+
+### MainApp (Çatı Bileşen)
+- Dinamik `useParams()` ile `/hizmet/:slug` ve `/bolge/:slug` rotalarını yönetir
+- Geçersiz slug → `/` ana sayfaya yönlendirir (`useNavigate`)
+- `<Helmet>` ile title, description, OG, JSON-LD dinamik basar
+- `scrollIntoView` ile ilgili section'a otomatik scroll
+- Tüm alt bileşenleri (Hero, Hizmetler, Footer vb.) içerir
 
 ### Hero
 - 130vh yükseklik, smooth scroll animasyonu
