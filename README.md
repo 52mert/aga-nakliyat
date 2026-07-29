@@ -13,6 +13,7 @@ Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı
 | Framework | React 19 + TypeScript |
 | Build | Vite 6 |
 | Routing | react-router-dom v7 |
+| SEO Meta | react-helmet-async |
 | Animasyon | motion (Framer Motion) |
 | CSS | Tailwind CSS v4 |
 | İkonlar | lucide-react |
@@ -45,11 +46,14 @@ Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı
     │
     ├── lib/
     │   └── supabase.ts
-    │
-    ├── context/
-    │   └── AppContext.tsx
-    │
-    ├── data/
+│
+├── config/
+│   └── seoRoutes.ts
+│
+├── context/
+│   └── AppContext.tsx
+│
+├── data/
     │   └── nakliyatData.ts
     │
     ├── assets/
@@ -57,6 +61,7 @@ Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı
     │
     └── components/
         ├── layout/
+        │   ├── MainApp.tsx
         │   ├── Hero.tsx
         │   ├── Sidebar.tsx
         │   ├── Footer.tsx
@@ -72,7 +77,8 @@ Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı
         │   ├── AddReviewModal.tsx
         │   └── HizmetDetayModal.tsx
         ├── ui/
-        │   └── WhatsAppIcon.tsx
+        │   ├── WhatsAppIcon.tsx
+        │   └── InstagramPopup.tsx
         └── admin/
             └── AdminPage.tsx
 ```
@@ -83,23 +89,29 @@ Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı
 
 ### Routing Katmanı
 ```
-<BrowserRouter>
+<BrowserRouter> (HelmetProvider ile sarılı)
   ├── Route "/"
   │   └── <MainApp>
+  │       ├── Helmet (dinamik title, description, OG, JSON-LD)
+  │       ├── [seoBanner] (varsa)        # H1 + SEO metni (slug'a göre)
   │       ├── <Sidebar>                  # Navigasyon + mobil drawer
   │       ├── <main>
   │       │   ├── <Hero>                 # Scroll parallax + puan rozeti
-  │       │   ├── <Hizmetler>            # Hizmet kartları
+  │       │   ├── <Hizmetler>            # Hizmet kartları (Link ile /hizmet/)
   │       │   ├── <NedenBiz>             # İstatistikler + avantajlar
   │       │   ├── <Galeri>               # Filtreli fotoğraf galerisi
   │       │   ├── <Yorumlar>             # Yorum carousel
   │       │   ├── <Iletisim>             # İletişim + teklif formu
-  │       │   └── <Footer>               # Alt bilgi
+  │       │   └── <Footer>               # Alt bilgi (Link ile /hizmet/, /bolge/)
   │       ├── <TeklifModal>              # Fiyat hesaplama (state: isCalculatorOpen)
-  │       ├── <HizmetDetayModal>         # Hizmet kartı detay
   │       ├── <AddReviewModal>           # Yorum ekleme
-  │       └── <FloatingButtons>          # Sabit WhatsApp + telefon
+  │       ├── <FloatingButtons>          # Sabit telefon + WhatsApp
+  │       └── <InstagramPopup>           # 3sn sonra göster, 10sn açık kal
   │
+  ├── Route "/hizmet/:slug" (SEO)
+  │   └── <MainApp> + SEO banner
+  ├── Route "/bolge/:slug" (SEO)
+  │   └── <MainApp> + SEO banner
   └── Route "/mertadmin"
       └── <AdminPage>                    # Auth korumalı admin paneli
           ├── Login (email + password)   # supabase.auth.signInWithPassword()
@@ -257,9 +269,49 @@ Tablolar `Row Level Security` ile korunur:
 | Rota | Açıklama |
 |---|---|
 | `/` | Ana site (Hero, Hizmetler, Galeri, Yorumlar, İletişim, Footer) |
+| `/hizmet/:slug` | SEO hizmet sayfası (dinamik title + H1 + JSON-LD) |
+| `/bolge/:slug` | SEO bölge sayfası (dinamik title + H1 + JSON-LD) |
 | `/mertadmin` | Admin paneli (gizli, hiçbir yerde buton yok) |
 
 Admin paneline yalnızca URL'den `/mertadmin` yazarak erişilir.
+
+---
+
+## SEO Rotaları (Dinamik Routing - Faz 1)
+
+3 bölge + 6 hizmet için dinamik SEO sayfaları oluşturulmuştur. Her sayfanın kendine özgü title, description, h1, OG meta ve JSON-LD (Schema.org) değeri vardır.
+
+### Bölge Rotaları
+
+| Rota | Title | JSON-LD Tipi |
+|---|---|---|
+| `/bolge/fatsa` | Fatsa Nakliyat | LocalBusiness |
+| `/bolge/unye` | Ünye Nakliyat | LocalBusiness |
+| `/bolge/ordu` | Ordu Nakliyat | LocalBusiness |
+
+### Hizmet Rotaları
+
+| Rota | Title | JSON-LD Tipi |
+|---|---|---|
+| `/hizmet/evden-eve` | Evden Eve Nakliyat | Service |
+| `/hizmet/asansorlu-nakliyat` | Asansörlü Nakliyat | Service |
+| `/hizmet/sehirlerarasi` | Şehirlerarası Nakliyat | Service |
+| `/hizmet/ambalajlama` | Profesyonel Ambalajlama | Service |
+| `/hizmet/ofis-tasima` | Ofis Taşıma | Service |
+| `/hizmet/parca-esya-tasima` | Parça Eşya Taşıma | Service |
+
+### SEO Bileşenleri
+
+- **Metrik**: `react-helmet-async` ile <Helmet> (title, meta, OG, canonical, JSON-LD)
+- **Banner**: Hero üstünde dinamik H1 + SEO metni (hizmette kırmızı, bölgede slate arkaplan)
+- **Redirect**: Geçersiz slug → ana sayfaya yönlendir
+- **Scroll**: Sayfa yüklenince ilgili section'a smooth scroll
+- **JSON-LD**: LocalBusiness (bölge) / Service (hizmet) şeması
+
+### İç Linkleme (Internal Linking)
+
+- **Footer**: "Hizmetlerimiz" ve "Hizmet Bölgelerimiz" sütunları `<Link>` ile SEO rotalara yönlendirir
+- **Hizmet Kartları**: "Hizmet Detaylarını İncele" butonu `<Link to="/hizmet/{slug}">` ile SEO sayfasına yönlendirir
 
 ---
 
@@ -346,7 +398,20 @@ vercel --prod
 
 ### WhatsAppIcon
 - Gerçek WhatsApp SVG ikonu (lucide-react Send değil)
-- Hero, Hizmetler, FloatingButtons, Sidebar, TeklifModal'de kullanılır
+- Hero, Hizmetler, Sidebar, TeklifModal'de kullanılır
+
+### FloatingButtons (Mobil Alt Bar)
+- **Sol buton**: `PhoneCall` ikonu + `0542 437 52 52` → telefon araması (`tel:` link)
+- **Sağ buton**: `PhoneCall` ikonu + `0535 599 15 72` → telefon araması (`tel:` link)
+- Masaüstü: Sağ alt köşede WhatsApp + Telefon floating widget
+
+### InstagramPopup
+- Sayfa açıldıktan **3 saniye** sonra görünür
+- **7 saniye** boyunca açık kalır, sonra otomatik kapanır
+- "İncele" butonu → Instagram yeni sekmede açar
+- "Hayır" / çarpı → kapanır, aynı seansta tekrar göstermez
+- Dark/light uyumlu, `Framer Motion` animasyonlu (`scale + opacity`)
+- `role="dialog"`, `aria-modal`, Escape tuşu ile kapatma
 
 ---
 

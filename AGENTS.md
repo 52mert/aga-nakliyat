@@ -14,9 +14,11 @@ Aga Nakliyat, Ordu / Fatsa merkezli evden eve asansörlü taşımacılık, ambal
 2. **Akıllı Fiyat Hesaplayıcı**: Supabase `pricing_config` tablosundan okur, oda/güzergah/kat/asansöre göre anında fiyat
 3. **Müşteri Yorumları**: Supabase `testimonials` tablosu, admin onaylı yayın, carousel gösterim
 4. **Saha Galerisi**: Supabase `gallery` tablosundan çekilen, admin panelden yönetilen (Storage yükleme), kategori filtreli, lightbox incelemeli dinamik galeri
-5. **Admin Paneli** (`/mertadmin`): Supabase Auth ile giriş, 6 sekme (hizmetler, ayarlar, galeri, teklifler, yorumlar, fiyatlandırma)
-6. **Hizmetler Yönetimi**: `services` tablosu + Storage ile admin panelden hizmet ekleme/düzenleme/silme, `Hizmetler.tsx` Supabase'den çeker
-6. **Supabase Backend**: Postgres tabloları + RLS + Auth ile güvenli CRUD
+5. **SEO Dinamik Rotaları**: 3 bölge (`/bolge/`) + 6 hizmet (`/hizmet/`) için ayrı title, description, OG, JSON-LD
+6. **Admin Paneli** (`/mertadmin`): Supabase Auth ile giriş, 6 sekme (hizmetler, ayarlar, galeri, teklifler, yorumlar, fiyatlandırma)
+7. **Hizmetler Yönetimi**: `services` tablosu + Storage ile admin panelden hizmet ekleme/düzenleme/silme, `Hizmetler.tsx` Supabase'den çeker
+8. **Instagram Popup**: Sayfa açılışında 3sn sonra Instagram yönlendirme popup'ı
+9. **Supabase Backend**: Postgres tabloları + RLS + Auth ile güvenli CRUD
 
 ---
 
@@ -59,7 +61,8 @@ Aga Nakliyat, Ordu / Fatsa merkezli evden eve asansörlü taşımacılık, ambal
 
 ### FloatingButtons (Mobil Alt Bar)
 - `pl-2 pr-[50px]` — sağdaki 50px alan scrollbar/kenar boşluğu
-- WhatsApp shake animasyonu: `shake-cycle` (4s, sadece vertical translate)
+- **Sol buton**: `PhoneCall` ikonu + `{companyInfo.phonePrimary}` → `tel:` arama
+- **Sağ buton**: `PhoneCall` ikonu + `0535 599 15 72` → `tel:` arama (whatsAppNumber üzerinden)
 - `env(safe-area-inset-bottom)` eklenmeli (iPhone çentik uyumu)
 
 ### Galeri Lightbox (Mobil)
@@ -71,25 +74,32 @@ Aga Nakliyat, Ordu / Fatsa merkezli evden eve asansörlü taşımacılık, ambal
 ### Yorumlar Kontrolleri
 - Prev/Next butonları `justify-center sm:justify-end` — mobilde ortalanır
 
+### Instagram Popup
+- **Zamanlama**: 3sn sonra göster, 7sn açık kal, toplam 10. saniyede kapanır
+- **Pozisyon**: `fixed z-50 bottom-4 left-4 right-4 md:bottom-8 md:right-8 md:left-auto md:max-w-[320px]`
+- **Animasyon**: Framer Motion `AnimatePresence` + scale/opacity/y
+- **Dark/Light**: AppContext theme ile tüm stiller
+- **Erişilebilirlik**: `role="dialog"`, `aria-modal`, Escape tuşu, 44px dokunma hedefleri
+- **Timer cleanup**: `useRef` + `clearTimeout` ile memory leak önlenir
+
 ---
 
 ## Dosya Yapısı
 
 ```
 src/
+├── config/               seoRoutes.ts (SEO rota veri sözlüğü)
 ├── components/
-│   ├── layout/           Hero, Sidebar, Footer, FloatingButtons
+│   ├── layout/           MainApp, Hero, Sidebar, Footer, FloatingButtons
 │   ├── sections/         Hizmetler, Galeri, Yorumlar, NedenBiz, Iletisim
 │   ├── modals/           TeklifModal, AddReviewModal, HizmetDetayModal
-│   ├── ui/               WhatsAppIcon (yeniden kullanılabilir UI'lar)
+│   ├── ui/               WhatsAppIcon, InstagramPopup
 │   └── admin/            AdminPage
 ├── context/              AppContext (global state, Supabase CRUD)
 ├── data/                 nakliyatData (statik veri / sabitler)
 ├── types.ts              TypeScript interface'leri
 ├── lib/                  supabase client
 └── assets/               asansorPhoto.ts (sabit SVG data URI)
-public/
-└── images/               14 adet gerçek firma JPEG fotoğrafı (eski repodan alındı)
 ```
 
 ---
@@ -98,7 +108,10 @@ public/
 
 ### Routing
 - `/` → Ana site (tüm bileşenler tek sayfada)
+- `/hizmet/:slug` → SEO hizmet sayfası (dinamik title, H1, JSON-LD, scrollIntoView)
+- `/bolge/:slug` → SEO bölge sayfası (dinamik title, H1, JSON-LD, scrollIntoView)
 - `/mertadmin` → Admin paneli (gizli rota, hiçbir yerde buton yok)
+- Geçersiz slug → `/` redirect (useNavigate ile)
 
 ### Auth
 - `supabase.auth.signInWithPassword({ email, password })` kullanılır
@@ -123,6 +136,21 @@ public/
 
 ### WhatsApp İkonları
 - Gerçek WhatsApp SVG (`ui/WhatsAppIcon.tsx`) kullanılır, lucide-react Send değil
+
+### SEO Rotaları (Dinamik Routing)
+- `src/config/seoRoutes.ts` → 3 bölge (fatsa, unye, ordu) + 6 hizmet (evden-eve, asansorlu-nakliyat, ...) SEO veri sözlüğü
+- `src/components/layout/MainApp.tsx` → `useParams()` ile slug okur, Helmet ile title/meta/OG/JSON-LD basar
+- `App.tsx` → HelmetProvider sarmalar, 2 yeni route ekler (`/hizmet/:slug`, `/bolge/:slug`)
+- SEO banner: Hero üstünde dinamik H1 + SEO metni (hizmet=kırmızı arkaplan, bölge=slate arkaplan)
+- JSON-LD: LocalBusiness (bölge) veya Service (hizmet) şeması, areaServed dinamik
+- 404 redirect: Geçersiz slug → `/` ana sayfaya yönlendir
+- Scroll: `document.getElementById().scrollIntoView({ behavior: 'smooth' })`
+- Kütüphane: `react-helmet-async`
+
+### Internal Linking (İç Linkleme)
+- **Footer.tsx**: "Hizmetlerimiz" ve "Hizmet Bölgelerimiz" sütunları `<Link>` ile SEO rotalara yönlendirir
+- **Hizmetler.tsx**: Kart altındaki "Hizmet Detaylarını İncele" butonu `<Link to="/hizmet/{slug}">` ile SEO sayfasına yönlendirir
+- `serviceRouteMap`: service.id → SEO slug dönüşümü (örn: `asansorlu-tasima` → `asansorlu-nakliyat`)
 
 ### Hizmetler Veri Akışı
 - `AdminPage.tsx` → form → `storage.upload("hizmetler/...")` + `services.insert()`
