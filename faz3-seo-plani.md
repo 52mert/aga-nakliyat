@@ -309,45 +309,69 @@ export const serviceRoutes: Record<string, SeoRoute> = {
 
 ## Adım 2: `middleware.ts` (Proje Kökünde)
 
+**Gerçek uygulama:** Middleware `seoRoutes.ts`'den import eder, veri tekrarı (code duplication) yoktur.
+
 ```ts
 import { next } from '@vercel/edge';
+import { seoRoutes, serviceRoutes, type SeoRoute } from './src/config/seoRoutes';
 
 export const config = {
-  matcher: ['/((?!robots.txt|sitemap.xml|_next|static|favicon).*)'],
+  matcher: ['/((?!robots.txt|sitemap.xml|index.html|favicon|assets|.*\\.(?:js|css|png|jpg|jpeg|gif|webp|svg|ico|woff2?|ttf|json)).*)'],
 };
 
-const BOT_REGEX = /googlebot|bingbot|yandexbot|facebookexternalhit|twitterbot|whatsapp|linkedinbot|slackbot/i;
+const BOT_REGEX = /googlebot|bingbot|yandexbot|facebookexternalhit|twitterbot|whatsapp|linkedinbot|slackbot|pinterestbot/i;
 
-const SEO_DATA: Record<string, { title: string; description: string; content: string }> = {
-  '/bolge/fatsa': {
-    title: 'Fatsa Nakliyat | Aga Nakliyat',
-    description: 'Fatsa evden eve nakliyat...',
-    content: '... (seoRoutes.ts\'den alınacak) ...',
-  },
-  // Tüm route'lar burada...
-};
+function findSeoData(pathname: string): SeoRoute | null {
+  if (pathname === '/') return null;
 
-export default async function middleware(req: Request) {
+  const parts = pathname.split('/').filter(Boolean);
+
+  if (parts[0] === 'bolge' && parts[1]) {
+    return seoRoutes[parts[1]] || null;
+  }
+
+  if (parts[0] === 'hizmet' && parts[1]) {
+    return serviceRoutes[parts[1]] || null;
+  }
+
+  return null;
+}
+
+export default async function middleware(req: Request): Promise<Response | void> {
   const ua = req.headers.get('user-agent') || '';
   if (!BOT_REGEX.test(ua.toLowerCase())) {
     return next();
   }
 
   const url = new URL(req.url);
-  const baseUrl = `${url.protocol}//${url.host}`;
-  const html = await fetch(`${baseUrl}/index.html`).then(r => r.text());
+  const seo = findSeoData(url.pathname);
+  if (!seo) {
+    return next();
+  }
 
-  const seo = SEO_DATA[url.pathname];
-  if (!seo) return next();
+  const origin = url.origin;
+  const html = await fetch(`${origin}/index.html`).then(r => r.text());
 
   let botHtml = html.replace(/<title>.*?<\/title>/, `<title>${seo.title}</title>`);
+
   botHtml = botHtml.replace(
-    /<meta\s+name="description"\s+content=".*?"\s*\/?>/,
+    /<meta\s+name="description"\s+content=".*?"\s*\/?>/i,
     `<meta name="description" content="${seo.description}" />`
   );
+
+  botHtml = botHtml.replace(
+    `<meta property="og:title" content="Aga Nakliyat - Fatsa, Ünye, Ordu Evden Eve Nakliyat" />`,
+    `<meta property="og:title" content="${seo.title}" />`
+  );
+
+  botHtml = botHtml.replace(
+    `<meta property="og:description" content="Aga Nakliyat - Fatsa, Ünye ve Ordu'da asansörlü, sigortalı, marangozlu evden eve nakliyat. 10+ yıl tecrübe, ücretsiz ekspertiz, hemen teklif alın." />`,
+    `<meta property="og:description" content="${seo.description}" />`
+  );
+
   botHtml = botHtml.replace(
     '<div id="root"></div>',
-    `<div id="seo-content" style="padding: 20px; max-width: 1200px; margin: 0 auto; font-family: sans-serif; color: #333; line-height: 1.6;">${seo.content}</div>\n  <div id="root"></div>`
+    `<div id="seo-content" style="padding:20px;max-width:1200px;margin:0 auto;font-family:sans-serif;color:#333;line-height:1.8;font-size:16px">${seo.seoContent}</div>\n  <div id="root"></div>`
   );
 
   return new Response(botHtml, {
@@ -373,11 +397,20 @@ curl -A "Mozilla/5.0" https://www.orduaganakliyat.com.tr/bolge/fatsa | head -10
 
 ---
 
+## Sonraki Aşama: Faz 4 - Google Analytics (GA4) Entegrasyonu
+
+Faz 3 tamamlandıktan sonra hangi sayfadan ne kadar trafik aldığını ölçmek için GA4 entegrasyonu yapılır.
+
+[**Faz 4 Planı → `faz4-ga4-plani.md`**](./faz4-ga4-plani.md)
+
+---
+
 ## Kontrol Listesi
 
-- [ ] `seoRoutes.ts` güncellendi (tüm route'lara `seoContent` eklendi)
-- [ ] `middleware.ts` oluşturuldu
-- [ ] `npm run build` hatasız çalışıyor
-- [ ] `curl -A "Googlebot"` ile test edildi
-- [ ] `curl -A "Mozilla/5.0"` normal SPA dönüyor
-- [ ] Google Search Console'a sitemap gönderildi
+- [x] `seoRoutes.ts` güncellendi (tüm route'lara `seoContent` eklendi)
+- [x] `middleware.ts` oluşturuldu (`@vercel/edge` kuruldu)
+- [x] `npm run build` hatasız çalışıyor
+- [x] `curl -A "Googlebot"` ile test edildi (dolu HTML dönüyor ✅)
+- [x] `curl -A "Mozilla/5.0"` normal SPA dönüyor
+- [x] Google Search Console'a sitemap gönderildi
+- [x] Tüm SEO route'ları (`/bolge/fatsa`, `/hizmet/evden-eve` vb.) bot testinden geçti

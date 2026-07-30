@@ -18,6 +18,8 @@ Fatsa, Ünye, Ordu bölgesinde evden eve asansörlü taşımacılık, ambalajlı
 | CSS | Tailwind CSS v4 |
 | İkonlar | lucide-react |
 | Backend | Supabase (Postgres + Auth) |
+| SEO Dynamic Rendering | Vercel Edge Middleware |
+| Analytics | Google Analytics 4 (react-ga4) |
 | Deployment | Vercel |
 
 ---
@@ -363,6 +365,26 @@ vercel --prod
 - Vercel Dashboard > Domain ekle: `aganakliyat.com.tr`
 - DNS: Nameserver veya CNAME ile yönlendir
 - `vercel.json` ile SPA fallback hazır
+
+---
+
+## Google Analytics (GA4) Entegrasyonu
+
+GA4, site trafiğini ölçmek ve hangi SEO sayfasının (`/bolge/fatsa`, `/hizmet/asansorlu-nakliyat` vb.) ne kadar ziyaret aldığını görmek için kullanılır.
+
+### Kullanılan Yöntem
+
+- **Kütüphane**: `react-ga4` (2KB gzipped)
+- **SPA Route Tracking**: `useLocation` + `useEffect` ile her route değişiminde `page_view` gönderilir
+- **Middleware Çakışması**: Yok — GA4 client'ta çalışır, middleware edge'de çalışır
+
+### Kurulum
+
+```bash
+npm install react-ga4
+```
+
+`.env` dosyasına `VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX` eklenir. Detaylı plan için: [`faz4-ga4-plani.md`](./faz4-ga4-plani.md)
 
 ---
 

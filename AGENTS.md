@@ -118,6 +118,18 @@ src/
 - Admin email: `admin@aganakliyat.com`, şifre Supabase Auth'da tanımlı
 - `VITE_ADMIN_PASSWORD` kullanılmaz, `.env`'den kaldırılabilir
 
+### Dynamic Rendering (Vercel Edge Middleware)
+- **Amaç**: Googlebot'a dolu HTML göstermek, insan kullanıcıya normal SPA sunmak
+- **Yöntem**: `middleware.ts` (proje kökü) — User-Agent kontrolü ile bot/insan ayrımı
+- **Puppeteer/Playwright**: KESİNLİKLE KULLANILMAZ (Vercel Hobby build süresini aşar)
+- **Ek kütüphane yok**: Sadece `String.replace()` ile manipülasyon
+- **İçerik kaynağı**: `src/config/seoRoutes.ts` → `seoRoutes` ve `serviceRoutes` objelerinden import edilir
+- **seoContent alanı**: Her route için ~300-500 kelimelik, Google dostu HTML içerik
+- **Loop önleme**: `matcher` config'de `/index.html`, statik dosyalar (`*.js`, `*.css`, resimler) hariç tutulur
+- **Gizli text yok**: Enjekte edilen içerik `<div id="seo-content">` ile normal görünür
+- **Cloaking değil**: Bot ve insan aynı içeriği görür (Google'ın Dynamic Rendering kılavuzuna uygun)
+- **Detaylı plan**: `faz3-seo-plani.md`
+
 ### Supabase Tabloları (lowercase column names)
 - `testimonials`, `quote_requests`, `company_settings`, `pricing_config`, `gallery`, `services`
 - Tümü RLS ile korunur: SELECT public, diğer işlemler authenticated
@@ -183,6 +195,13 @@ src/
 - `updatePricingConfig` (`AppContext.tsx`) artık `Promise<boolean>` döndürür
 - Başarısız olursa state eski haline döner, admin panelinde kırmızı "kaydedilemedi" uyarısı çıkar
 - `handleSavePricing` (`AdminPage.tsx`): `useEffect` ile `pricingForm` senkronizasyonu eklendi
+
+### Google Analytics (GA4)
+- **Kütüphane**: `react-ga4` — client'ta çalışır, edge middleware ile çakışmaz
+- **Route tracking**: `useAnalytics()` hook'u ile `src/hooks/useAnalytics.ts`
+- **Hook mantığı**: `useLocation()` + `useEffect([location])` ile her route değişiminde `ReactGA.send({ hitType: 'pageview', page })`
+- **.env**: `VITE_GA_MEASUREMENT_ID` ile Measurement ID alınır
+- **Detaylı plan**: `faz4-ga4-plani.md`
 
 ---
 
