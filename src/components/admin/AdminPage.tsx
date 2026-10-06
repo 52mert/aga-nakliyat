@@ -37,6 +37,10 @@ export default function AdminPage() {
     setPricingForm(pricingConfig);
   }, [pricingConfig]);
 
+  useEffect(() => {
+    setSettingsForm(companyInfo);
+  }, [companyInfo]);
+
   const [galleryItems, setGalleryItems] = useState<any[]>([]);
   const [galleryLoading, setGalleryLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
