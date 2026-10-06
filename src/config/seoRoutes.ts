@@ -14,13 +14,13 @@ export interface SeoRoute {
 export const seoRoutes: Record<string, SeoRoute> = {
   'fatsa': {
     slug: 'fatsa',
-    title: 'Fatsa Nakliyat | Aga Nakliyat - Fatsa Evden Eve Taşımacılık',
-    description: 'Fatsa nakliyat, Fatsa evden eve nakliyat hizmetleri. Fatsa merkezli asansörlü, sigortalı taşımacılık. Ücretsiz ekspertiz için hemen teklif alın.',
+    title: 'Fatsa Evden Eve Nakliyat | Hasarsız Taşıma & Ücretsiz Keşif',
+    description: 'Fatsa, Dolunay ve Ayazlı\'da 25. kata kadar asansörlü, %100 sigortalı evden eve nakliyat. Hasarsız taşıma sözüyle hemen ücretsiz ekspertiz çağırın!',
     h1Text: 'Fatsa Nakliyat ve Evden Eve Taşımacılık',
     subText: 'Aga Nakliyat Fatsa merkezli olarak evden eve, asansörlü ve şehirlerarası nakliyat hizmeti vermektedir. Fatsa ve çevre ilçelerde 10+ yıllık tecrübemizle eşyalarınızı güvenle taşıyoruz.',
     seoContent: `<div>
   <h2>Fatsa Evden Eve Nakliyat Hizmeti</h2>
-  <p>Fatsa nakliyat sektöründe 10 yılı aşkın tecrübemizle evden eve taşımacılık, ofis taşımacılığı ve şehirlerarası nakliyat hizmetleri sunuyoruz. Fatsa merkezli olarak hizmet veren firmamız, modern araç filosu ve uzman personeliyle eşyalarınızı güvenle yeni adresinize ulaştırır. Fatsa evden eve nakliyat sürecinde eşyalarınız profesyonel ekipler tarafından özenle paketlenir, demonte edilir ve sigorta kapsamında taşınır.</p>
+  <p>Ayazlı, Dolunay ve Evkaf mahalleleri başta olmak üzere Fatsa nakliyat sektöründe 10 yılı aşkın tecrübemizle evden eve taşımacılık, ofis taşımacılığı ve şehirlerarası nakliyat hizmetleri sunuyoruz. Fatsa merkezli olarak hizmet veren firmamız, modern araç filosu ve uzman personeliyle eşyalarınızı güvenle yeni adresinize ulaştırır. Fatsa evden eve nakliyat sürecinde eşyalarınız profesyonel ekipler tarafından özenle paketlenir, demonte edilir ve sigorta kapsamında taşınır.</p>
   <p>Fatsa asansörlü nakliyat hizmetimiz sayesinde yüksek katlı binalarda dahi eşyalarınız hasarsız bir şekilde taşınır. Mobil hidrolik asansör sistemimiz ile 25. kata kadar güvenli taşıma imkanı sunuyoruz. Fatsa merkezli olarak hizmet veren firmamız, aynı zamanda Fatsa ofis taşımacılığı ve Fatsa şehirlerarası nakliyat konusunda da profesyonel çözümler üretmektedir.</p>
   <h3>Fatsa Nakliyat Neden Aga Nakliyat?</h3>
   <ul>
@@ -40,14 +40,14 @@ export const seoRoutes: Record<string, SeoRoute> = {
   },
   'unye': {
     slug: 'unye',
-    title: 'Ünye Nakliyat | Aga Nakliyat - Ünye Evden Eve Taşımacılık',
-    description: 'Ünye nakliyat, Ünye evden eve nakliyat. Ünye merkezli asansörlü, sigortalı taşımacılık hizmetleri. Hemen teklif alın.',
+    title: 'Ünye Evden Eve Nakliyat | Çiziksiz Taşıma & Marangoz Desteği',
+    description: 'Ünye\'de eşyalarınız çizilmesin! Avrupa standartlarında ambalajlama, uzman marangoz desteği ve 25. kata asansör hizmeti. WhatsApp\'tan anında fiyat alın.',
     h1Text: 'Ünye Nakliyat ve Evden Eve Taşımacılık',
     subText: 'Ünye ve çevresinde Aga Nakliyat güvencesiyle evden eve nakliyat, asansörlü taşıma ve şehirlerarası lojistik.',
     seoContent: `<div>
   <h2>Ünye Evden Eve Nakliyat Hizmeti</h2>
   <p>Ünye nakliyat hizmetlerinde kalite ve güvenin adresi Aga Nakliyat. Ünye merkezli evden eve nakliyat, ofis taşımacılığı ve şehirlerarası taşımacılık konularında profesyonel çözümler sunuyoruz. Ünye ve çevre ilçelerde geniş hizmet ağımızla müşterilerimize kesintisiz destek sağlıyoruz.</p>
-  <p>Ünye evden eve nakliyat sürecinde eşyalarınızın güvenliği bizim önceliğimizdir. Profesyonel paketleme ekiplerimiz eşyalarınızı avrupa standartlarında ambalaj malzemeleriyle paketler ve güvenle yeni adresinize taşır. Ünye asansörlü nakliyat hizmetimiz ile özellikle yüksek katlı binalarda eşyalarınızı hasarsız bir şekilde taşıyoruz. Mobil asansör sistemimiz sayesinde Ünye'de her kattan güvenli taşıma imkanı sunuyoruz.</p>
+  <p>Gölevi, Çamlık ve Atatürk mahalleleri dahil tüm Ünye evden eve nakliyat sürecinde eşyalarınızın güvenliği bizim önceliğimizdir. Profesyonel paketleme ekiplerimiz eşyalarınızı avrupa standartlarında ambalaj malzemeleriyle paketler ve güvenle yeni adresinize taşır. Ünye asansörlü nakliyat hizmetimiz ile özellikle yüksek katlı binalarda eşyalarınızı hasarsız bir şekilde taşıyoruz. Mobil asansör sistemimiz sayesinde Ünye'de her kattan güvenli taşıma imkanı sunuyoruz.</p>
   <h3>Ünye Nakliyat Hizmetlerimiz</h3>
   <ul>
     <li>Ünye evden eve nakliyat ile eşyalarınız güvenle yeni adresinize ulaşır</li>
@@ -66,8 +66,8 @@ export const seoRoutes: Record<string, SeoRoute> = {
   },
   'ordu': {
     slug: 'ordu',
-    title: 'Ordu Nakliyat | Aga Nakliyat - Ordu Evden Eve Taşımacılık',
-    description: 'Ordu nakliyat, Ordu evden eve nakliyat. Ordu merkezli asansörlü, sigortalı evden eve taşımacılık.',
+    title: 'Ordu Evden Eve Nakliyat | %100 Güven, Profesyonel Kadro',
+    description: 'Altınordu ve tüm Ordu ilçelerinde Aga Nakliyat kalitesi. Kırılmaya karşı tam kapsamlı sigorta, usta marangozlar ve temiz nakliye. Hemen arayın!',
     h1Text: 'Ordu Nakliyat ve Evden Eve Taşımacılık',
     subText: 'Ordu merkez ve tüm ilçelerde Aga Nakliyat güvencesiyle profesyonel evden eve nakliyat hizmeti.',
     seoContent: `<div>
@@ -76,7 +76,7 @@ export const seoRoutes: Record<string, SeoRoute> = {
   <p>Ordu evden eve nakliyat sürecinde müşteri memnuniyetini her şeyin önünde tutuyoruz. Eşyalarınız özenle paketlenir, demonte işlemleri marangoz ekibimiz tarafından titizlikle yapılır ve taşıma işlemi sigorta güvencesi altında gerçekleştirilir. Ordu asansörlü nakliyat hizmetimizle yüksek katlı binalarda dahi güvenli taşıma imkanı sunuyoruz.</p>
   <h3>Ordu Nakliyat Hizmet Bölgelerimiz</h3>
   <ul>
-    <li>Ordu merkez evden eve nakliyat hizmeti</li>
+    <li>Altınordu, Şahincili ve Akyazı bölgelerinde asansörlü evden eve nakliyat hizmeti</li>
     <li>Fatsa, Ünye, Perşembe, Gülyalı ilçelerinde profesyonel taşıma</li>
     <li>Kumru, Korgan, Gölköy, Mesudiye çevresinde güvenli nakliyat</li>
     <li>Aybastı, Çamaş, İkizce, Çaybaşı bölgelerinde ekonomik taşıma</li>
@@ -95,8 +95,8 @@ export const seoRoutes: Record<string, SeoRoute> = {
 export const serviceRoutes: Record<string, SeoRoute> = {
   'evden-eve': {
     slug: 'evden-eve',
-    title: 'Evden Eve Nakliyat | Aga Nakliyat',
-    description: 'Profesyonel evden eve nakliyat hizmeti. Sigortalı, marangozlu, ambalajlı taşıma. Fatsa, Ünye, Ordu için hemen teklif alın.',
+    title: 'Evden Eve Nakliyat | Anahtar Teslim Sigortalı Taşıma',
+    description: 'Fatsa, Ünye ve Ordu genelinde anahtar teslim, ambalajlı ve marangozlu evden eve nakliyat. Eşyalarınız bizimle %100 güvende!',
     h1Text: 'Evden Eve Nakliyat Hizmeti',
     subText: 'Eşyalarınız özenle paketlenir, sigortalı olarak yeni adresinize teslim edilir. Marangozlu söküm ve montaj dahil.',
     seoContent: `<div>
@@ -122,8 +122,8 @@ export const serviceRoutes: Record<string, SeoRoute> = {
   },
   'asansorlu-nakliyat': {
     slug: 'asansorlu-nakliyat',
-    title: 'Asansörlü Nakliyat | Aga Nakliyat',
-    description: 'Mobil hidrolik asansörle 25. kata kadar eşya taşıma. Fatsa, Ünye, Ordu asansörlü nakliyat.',
+    title: 'Asansörlü Evden Eve Nakliyat | 25. Kata Hasarsız Hızlı Taşıma',
+    description: 'Bina merdivenlerinde eşya çizilmesine son! Ordu ve Fatsa\'da dış cephe mobil asansör sistemimizle aynı gün, sıfır hasarlı taşıma. Fiyat teklifi alın!',
     h1Text: 'Asansörlü Nakliyat Hizmeti',
     subText: 'Modüler mobil hidrolik asansörlerimizle eşyalarınız çizilmeden ve bina içi yıpranmadan taşınır.',
     seoContent: `<div>
@@ -148,8 +148,8 @@ export const serviceRoutes: Record<string, SeoRoute> = {
   },
   'sehirlerarasi': {
     slug: 'sehirlerarasi',
-    title: 'Şehirlerarası Nakliyat | Aga Nakliyat',
-    description: 'Ordu ve Karadeniz bölgesinden Türkiye\'nin 81 iline güvenli şehirlerarası nakliyat.',
+    title: 'Şehirlerarası Nakliyat | 81 İle Garantili Taşımacılık',
+    description: 'Karadeniz\'den Türkiye\'nin 81 iline GPS takipli, tam kapsamlı sigortalı ve ambalajlı şehirlerarası evden eve nakliyat.',
     h1Text: 'Şehirlerarası Nakliyat Hizmeti',
     subText: 'GPS takipli araçlarımızla Türkiye\'nin her noktasına güvenli ve zamanında teslimat.',
     seoContent: `<div>

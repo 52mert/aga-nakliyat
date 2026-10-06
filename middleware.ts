@@ -5,8 +5,6 @@ export const config = {
   matcher: ['/((?!robots.txt|sitemap.xml|index.html|favicon|assets|.*\\.(?:js|css|png|jpg|jpeg|gif|webp|svg|ico|woff2?|ttf|json)).*)'],
 };
 
-const BOT_REGEX = /googlebot|bingbot|yandexbot|facebookexternalhit|twitterbot|whatsapp|linkedinbot|slackbot|pinterestbot/i;
-
 function findSeoData(pathname: string): SeoRoute | null {
   if (pathname === '/') return null;
 
@@ -24,11 +22,6 @@ function findSeoData(pathname: string): SeoRoute | null {
 }
 
 export default async function middleware(req: Request): Promise<Response | void> {
-  const ua = req.headers.get('user-agent') || '';
-  if (!BOT_REGEX.test(ua.toLowerCase())) {
-    return next();
-  }
-
   const url = new URL(req.url);
   const seo = findSeoData(url.pathname);
   if (!seo) {
@@ -38,29 +31,37 @@ export default async function middleware(req: Request): Promise<Response | void>
   const origin = url.origin;
   const html = await fetch(`${origin}/index.html`).then(r => r.text());
 
-  let botHtml = html.replace(/<title>.*?<\/title>/, `<title>${seo.title}</title>`);
+  // Dinamik olarak Title ve Meta Description etiketlerini güncelle
+  let finalHtml = html.replace(/<title>.*?<\/title>/, `<title>${seo.title}</title>`);
 
-  botHtml = botHtml.replace(
+  finalHtml = finalHtml.replace(
     /<meta\s+name="description"\s+content=".*?"\s*\/?>/i,
     `<meta name="description" content="${seo.description}" />`
   );
 
-  botHtml = botHtml.replace(
-    `<meta property="og:title" content="Aga Nakliyat - Fatsa, Ünye, Ordu Evden Eve Nakliyat" />`,
+  finalHtml = finalHtml.replace(
+    /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i,
     `<meta property="og:title" content="${seo.title}" />`
   );
 
-  botHtml = botHtml.replace(
-    `<meta property="og:description" content="Aga Nakliyat - Fatsa, Ünye ve Ordu'da asansörlü, sigortalı, marangozlu evden eve nakliyat. 10+ yıl tecrübe, ücretsiz ekspertiz, hemen teklif alın." />`,
+  finalHtml = finalHtml.replace(
+    /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i,
     `<meta property="og:description" content="${seo.description}" />`
   );
 
-  botHtml = botHtml.replace(
-    '<div id="root"></div>',
-    `<div id="seo-content" style="padding:20px;max-width:1200px;margin:0 auto;font-family:sans-serif;color:#333;line-height:1.8;font-size:16px">${seo.seoContent}</div>\n  <div id="root"></div>`
+  finalHtml = finalHtml.replace(
+    /<meta\s+name="twitter:title"\s+content=".*?"\s*\/?>/i,
+    `<meta name="twitter:title" content="${seo.title}" />`
   );
 
-  return new Response(botHtml, {
+  // BOT/İNSAN AYRIMINI (CLOAKING RISKINI) SIFIRA İNDİRDİK
+  // SEO içeriklerini %100 legal olan <noscript> etiketiyle DOM'a basıyoruz
+  finalHtml = finalHtml.replace(
+    '<div id="root"></div>',
+    `<noscript id="seo-content">${seo.seoContent}</noscript>\n  <div id="root"></div>`
+  );
+
+  return new Response(finalHtml, {
     headers: { 'content-type': 'text/html;charset=utf-8' },
   });
 }

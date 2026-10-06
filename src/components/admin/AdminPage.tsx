@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { 
   X, Lock, ShieldCheck, FileText, MessageSquare, PhoneCall, 
   Trash2, Check, Plus, Settings, Send, LogOut, Save,
@@ -239,6 +240,7 @@ export default function AdminPage() {
   if (!authenticated) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
+        <Helmet><meta name="robots" content="noindex" /></Helmet>
         <div className="w-full max-w-md">
           <button onClick={() => navigate('/')} className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-8 text-sm font-medium">
             <ArrowLeft className="w-4 h-4" />
